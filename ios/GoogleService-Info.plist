@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>484302298595-rt2l114jee1ti5dsegclqpd8m9plagi5.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.484302298595-rt2l114jee1ti5dsegclqpd8m9plagi5</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCtlKAprsE0e0TR-d8LInCf_F6cmF05bLQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>484302298595</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.my</string>
+	<key>PROJECT_ID</key>
+	<string>gold-gateway-529</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gold-gateway-529.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:484302298595:ios:5b85b7220a5a0015b514d6</string>
+	<key>DATABASE_URL</key>
+	<string>https://gold-gateway-529.firebaseio.com</string>
+</dict>
+</plist>

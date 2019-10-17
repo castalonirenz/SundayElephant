@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "484302298595",
+    "firebase_url": "https://gold-gateway-529.firebaseio.com",
+    "project_id": "gold-gateway-529",
+    "storage_bucket": "gold-gateway-529.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484302298595:android:c878048577022a16b514d6",
+        "android_client_info": {
+          "package_name": "com.my"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "484302298595-uho8mousr87q6c0sjv63iada1455eg7t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt066qnPYTwqCMRR8IW2wtrUO5dbxjc24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "484302298595-uho8mousr87q6c0sjv63iada1455eg7t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
