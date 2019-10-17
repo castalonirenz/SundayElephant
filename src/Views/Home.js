@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, ImageBackground } from 'react-native';
 
 class Home extends Component {
   constructor(props) {
@@ -10,9 +10,15 @@ class Home extends Component {
 
   render() {
     return (
-      <SafeAreaView style={{flex: 1}}>
-        <Text> Home </Text>
-      </SafeAreaView>
+      <ImageBackground
+        source={require('../Assets/Background/background3.jpg')}
+        style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1 }}>
+
+
+
+        </SafeAreaView>
+      </ImageBackground>
     );
   }
 }

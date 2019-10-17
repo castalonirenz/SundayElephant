@@ -3,8 +3,10 @@ import { View, Text, SafeAreaView, ScrollView, ImageBackground, PixelRatio } fro
 import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-community/google-signin';
 import { ThemeResponsive } from "../Themes/Theme";
 import { Title } from "../Themes/StyledComponent";
+import { connect } from "react-redux";
+import { SET_CREDENTIALS } from "../Redux/Action/Auth";
 const Pixel = PixelRatio.get()
-export default class Startup extends Component {
+ class Startup extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,8 +21,8 @@ export default class Startup extends Component {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      console.log(userInfo, "--> user info")
-      this.setState({ userInfo });
+      this.props.setGoogle(userInfo)
+      this.props.navigation.navigate('DrawerLandingPage')
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -67,3 +69,11 @@ export default class Startup extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return{
+    setGoogle: (data) => dispatch(SET_CREDENTIALS(data))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Startup)

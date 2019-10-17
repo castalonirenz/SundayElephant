@@ -4,6 +4,8 @@ import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { TabContainer } from "./src/Navigators/BottomTabNavigator";
 import { DrawerContainer } from "./src/Navigators/DrawerNavigator";
 import { InitialStackContainer } from './src/Navigators/StackNavigator';
+import { Provider } from "react-redux";
+import { store } from "./src/Redux/configureStore";
 export default  class App extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +15,9 @@ export default  class App extends Component {
 
   render() {
     return (
-      <SwitchContainer/>
+   <Provider store={store}>
+        <SwitchContainer />
+   </Provider>
     );
   }
 }
