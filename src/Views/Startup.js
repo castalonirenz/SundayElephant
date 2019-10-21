@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, SafeAreaView, ScrollView, ImageBackground, PixelRatio } from 'react-native';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-community/google-signin';
 import { ThemeResponsive } from "../Themes/Theme";
-import { Title } from "../Themes/StyledComponent";
+import { Title, DrawerLabel } from "../Themes/StyledComponent";
 import { connect } from "react-redux";
 import { SET_CREDENTIALS } from "../Redux/Action/Auth";
 const Pixel = PixelRatio.get()
@@ -54,6 +54,7 @@ const Pixel = PixelRatio.get()
               >
                 Create an account to see your bills and access them anywhere.
               </Title>
+              
             </View>
      
             <GoogleSigninButton

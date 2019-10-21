@@ -15,11 +15,14 @@ export const Title = styled.Text.attrs(props => ({
     color: #fff;
 `
 
+
+
+
 export const DrawerLabel = styled.Text.attrs(props => ({
     size: props.size || "12px",
     color: props.color || "#000"
 }))`
-    font-size ${props => props.size};
+    font-size: ${props => props.size};
     color: ${props => props.color};
     font-weight: bold;
 `
