@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { TabContainer } from "./src/Navigators/BottomTabNavigator";
 import { DrawerContainer } from "./src/Navigators/DrawerNavigator";
-import { InitialStackContainer } from './src/Navigators/StackNavigator';
+import { InitialStackContainer, HomeNavContainer } from './src/Navigators/StackNavigator';
 import { Provider } from "react-redux";
 import { store } from "./src/Redux/configureStore";
 export default  class App extends Component {
@@ -25,7 +25,7 @@ export default  class App extends Component {
 const SwitchNav = createSwitchNavigator({
       // LandingPage: TabContainer,
       Initial: InitialStackContainer,
-      DrawerLandingPage: DrawerContainer
+      LandingPage: HomeNavContainer
 })
 
 const SwitchContainer = createAppContainer(SwitchNav)

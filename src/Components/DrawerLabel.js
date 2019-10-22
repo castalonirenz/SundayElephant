@@ -1,17 +1,19 @@
 import { View, TouchableOpacity } from "react-native";
 import React , { Component, useState } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faHome, faCog, faArrowRight, faChevronCircleRight, faArrowLeft, faFileInvoiceDollar, faFile, faArchive, faUser } from "@fortawesome/free-solid-svg-icons";
-
+import { faHome, faCog, faArrowRight, faChevronCircleRight, faArrowLeft, faFile, faArchive, faUser, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
+import { NavigationActions } from "react-navigation";
 import { DrawerLabel } from "../Themes/StyledComponent";
 
-export const renderLabel = () => {
+
+
+export const renderLabel = (navigation) => {
     const [selection, setSelection] = useState('Home')
     if (selection === "Home") {
         return (
             <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
                 <TouchableOpacity
-                    onPress={() => setSelection('Home')}
+                    onPress={() => navigation.navigate('Home')}
                     // onPress={() => props.navigation.navigate('DrawerLandingPage')}
                     style={{ marginTop: 10, flexDirection: "row", width: "100%", alignItems: "center", padding: 10 }}>
                     <FontAwesomeIcon icon={faHome} size={20} color={selection === "Home" ? "#f0134d" : "#000"} />
@@ -81,6 +83,7 @@ export const renderLabel = () => {
                     </View>
                 </TouchableOpacity>
 
+                
                 <TouchableOpacity
                     onPress={() => setSelection('Home')}
                     // onPress={() => props.navigation.navigate('DrawerLandingPage')}
@@ -90,6 +93,40 @@ export const renderLabel = () => {
                         <DrawerLabel color={selection === "Home" ? "#f0134d" : "#000"}>Past Bill</DrawerLabel>
                     </View>
                 </TouchableOpacity>
+
+
+                {/* admin items */}
+
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('Create')}
+                    // onPress={() => props.navigation.navigate('DrawerLandingPage')}
+                    style={{ marginTop: 10, flexDirection: "row", width: "100%", alignItems: "center", padding: 10 }}>
+                    <FontAwesomeIcon icon={faPlusSquare} size={20} color={"#f0134d"} />
+                    <View style={{ marginLeft: 5, }}>
+                        <DrawerLabel color={selection === "Home" ? "#f0134d" : "#000"}>Create Bill</DrawerLabel>
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => setSelection('Home')}
+                    // onPress={() => props.navigation.navigate('DrawerLandingPage')}
+                    style={{ marginTop: 10, flexDirection: "row", width: "100%", alignItems: "center", padding: 10 }}>
+                    <FontAwesomeIcon icon={faFile} size={20} color={"#f0134d"} />
+                    <View style={{ marginLeft: 5, }}>
+                        <DrawerLabel color={selection === "Home" ? "#f0134d" : "#000"}>Update Bill</DrawerLabel>
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => setSelection('Home')}
+                    // onPress={() => props.navigation.navigate('DrawerLandingPage')}
+                    style={{ marginTop: 10, flexDirection: "row", width: "100%", alignItems: "center", padding: 10 }}>
+                    <FontAwesomeIcon icon={faFile} size={20} color={"#f0134d"} />
+                    <View style={{ marginLeft: 5, }}>
+                        <DrawerLabel color={selection === "Home" ? "#f0134d" : "#000"}>List</DrawerLabel>
+                    </View>
+                </TouchableOpacity>
+
 
 
             </View>

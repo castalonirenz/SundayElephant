@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, ScrollView, ImageBackground, PixelRatio } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, ImageBackground, PixelRatio, Button } from 'react-native';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-community/google-signin';
 import { ThemeResponsive } from "../Themes/Theme";
 import { Title, DrawerLabel } from "../Themes/StyledComponent";
@@ -22,7 +22,7 @@ const Pixel = PixelRatio.get()
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       this.props.setGoogle(userInfo)
-      this.props.navigation.navigate('DrawerLandingPage')
+      this.props.navigation.navigate('LandingPage')
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -63,6 +63,8 @@ const Pixel = PixelRatio.get()
               color={GoogleSigninButton.Color.Dark}
               onPress={this.signIn}
               disabled={this.state.isSigninInProgress} />
+
+          <Button onPress={() => this.props.navigation.navigate('LandingPage')} title="test"/>
  
 
         </ImageBackground>

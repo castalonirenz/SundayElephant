@@ -1,6 +1,6 @@
 import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
 import { SafeAreaView, ScrollView, Text, TouchableOpacity, View, Dimensions, ImageBackground } from "react-native";
-import { createAppContainer, NavigationActions } from "react-navigation";
+import { createAppContainer, NavigationActions, withNavigation } from "react-navigation";
 import { DrawerLabel } from "../Themes/StyledComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faHome, faCog, faArrowRight, faChevronCircleRight, faArrowLeft, faFileInvoiceDollar, faFile, faArchive, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -8,6 +8,8 @@ import React, { useState } from 'react'
 import { ThemeResponsive } from "../Themes/Theme";
 import HomeScreen from "../Views/Home";
 import {renderLabel} from "../Components/DrawerLabel";
+import Bill from '../Views/Bill';
+
 
 
 
@@ -27,7 +29,9 @@ const CustomDrawer = (props) => {
                     <Text style={{ color: "#FFF" }}>test</Text>
                 </ImageBackground>
 
-                {renderLabel()}
+           
+
+                {renderLabel(props.navigation)}
 
                 {/* <DrawerNavigatorItems {...props} /> */}
             </SafeAreaView>
@@ -42,6 +46,9 @@ const Drawer = createDrawerNavigator({
     "My Account": {
         screen: HomeScreen
     },
+    Create:{
+        screen: Bill
+    },
     Project: {
         screen: HomeScreen
     },
@@ -52,7 +59,7 @@ const Drawer = createDrawerNavigator({
         screen: HomeScreen
     }
 }, {
-    contentComponent: CustomDrawer,
+    contentComponent: withNavigation(CustomDrawer),
     contentOptions: {
         activeTintColor: "orange",
     }
