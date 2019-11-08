@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import Auth from "./Reducer/Auth";
 
 const combineReducer = combineReducers({
-        Auth: Auth
+        Credentials: Auth
 })
 
 export const store = createStore(combineReducer,compose(applyMiddleware(thunk)))

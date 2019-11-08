@@ -12,7 +12,7 @@ export const Title = styled.Text.attrs(props => ({
     size: props.size || "12px"
 }))`
     font-size: ${props => props.size};
-    color: #fff;
+    color: #000;
 `
 
 

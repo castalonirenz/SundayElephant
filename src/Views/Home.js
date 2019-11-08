@@ -1,33 +1,65 @@
-import React, { Component } from 'react';
-import { View, Text, SafeAreaView, ScrollView, ImageBackground, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, SafeAreaView, ScrollView, ImageBackground, TouchableOpacity, Button } from 'react-native';
 import { DrawerActions } from 'react-navigation-drawer';
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { HeaderComponent, CalendarComponent } from "../Components/indexComponent";
+import { withNavigation } from "react-navigation";
+import moment from "moment";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { connect } from "react-redux";
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
+let today = moment().format('YYYY-MM-DD')
+
+const Home = (props) => {
+  const [markedDates, setMarkedDates] = useState(
+    {
+      '2019-11-07': { selected: true, marked: true },
+    }
+  )
+  const [omg, setTest] = useState(
+    'some shit'
+  )
+
+  const Selected = (day) => {
+    
+    let selectedDate = day.dateString
+    // let tempObj = markedDates
+    //     tempObj[selectedDate] = {marked: true}
+    //     setMarkedDates(tempObj)
+
+    setMarkedDates({...markedDates, [selectedDate]:{
+      marked: true
+    }})
+
+ 
   }
 
-  render() {
-    return (
-      <ImageBackground
-        source={require('../Assets/Background/background3.jpg')}
-        style={{ flex: 1 }}>
-        <SafeAreaView style={{ flex: 1 }}>
-        <TouchableOpacity
-            onPress={() => this.props.navigation.dispatch(DrawerActions.toggleDrawer())}
-          >
-          <FontAwesomeIcon icon={faBars} size={25} color="#fff" style={{marginLeft: 15  , marginTop: 10,}}/>
-        </TouchableOpacity>
+  useEffect(() => {
+    
+  })
 
+  return (
+    <SafeAreaView style={{ flex: 1, width: "100%", backgroundColor: "#16242a" }}>
+      <HeaderComponent
+        Icon={faBars}
+        Toggle={() => props.navigation.dispatch(DrawerActions.toggleDrawer())}
+      />
+  
+      <Button onPress={() => props.navigation.dispatch(DrawerActions.toggleDrawer())} title="sesame"></Button>
+      <CalendarComponent
+        current={today}
+        markedDates={markedDates}
+        DayPress={Selected.bind(this)}
+      />
+    </SafeAreaView>
+  )
+}
 
-        </SafeAreaView>
-      </ImageBackground>
-    );
+const mapStateToProps = state => {
+  return{
+      Credentials: state.Credentials.info
   }
 }
 
-export default Home;
+
+
+export default connect(mapStateToProps, null)(withNavigation(Home))
