@@ -1,4 +1,4 @@
-import { GOOGLE_SIGIN, SIGN_IN } from "../actionType";
+import { GOOGLE_SIGIN, SIGN_IN, LOG_OUT } from "../actionType";
 import axios from 'axios'
 
 export const Login =(credentials) => {
@@ -32,5 +32,11 @@ export const SET_CREDENTIALS = (data) => {
     return{
         type: SIGN_IN,
         credentials: data
+    }
+}
+
+export const Logout =() => {
+    return{
+        type:LOG_OUT
     }
 }

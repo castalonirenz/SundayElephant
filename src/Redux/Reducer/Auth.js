@@ -1,4 +1,4 @@
-import { GOOGLE_SIGIN, SIGN_IN } from "../actionType";
+import { GOOGLE_SIGIN, SIGN_IN, LOG_OUT } from "../actionType";
 
 const initialState ={ 
     info: null
@@ -17,6 +17,10 @@ const AuthReducer = (state = initialState, action) => {
             return {
                 ...state,
                 info: action.credentials
+            }
+        case LOG_OUT:
+            return{
+                info: null
             }
             default:
         return state

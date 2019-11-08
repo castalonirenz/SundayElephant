@@ -7,11 +7,11 @@ export const showEmployee = () => {
         axios.post('http://sunday.fitnessforlifetoday.com/api/employeList')
             .then((response) => {
 
-                console.log(response.data.data)
+                
                 dispatch(setEmployee(response.data.data))
             })
             .catch((err => {
-                    console.log(err)
+                    
             }))
     }
 }

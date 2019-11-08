@@ -20,7 +20,7 @@ const CreateProject = (props) => {
     const [endDate, showEndDate] = useState(false)
 
     const Update = (property, val, date) => {
-        console.log(date)
+        
         date === undefined ? showStartDate(false) : null
         // let tempObj = project
         // tempObj[property] = val
@@ -28,7 +28,7 @@ const CreateProject = (props) => {
     }
 
     useEffect(() => {
-        console.log(moment, "--> initial start date")
+        
     })
 
 
@@ -43,7 +43,7 @@ const CreateProject = (props) => {
 
             {startDate ? <DatePickerComponent
 
-                onCancel={() => console.log('cancelled')}
+                // onCancel={() => }
                 dateTimeVisible={startDate}
                 value={project.start_date}
                 onChange={Update.bind(this, "start_date")}

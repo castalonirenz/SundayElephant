@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, View, Text, Picker, Alert, TouchableHighlight, Dimensions } from "react-native";
+import { Modal, View, Text, Picker, Alert, TouchableHighlight, Dimensions, TouchableOpacity } from "react-native";
 import { Style } from "../utils/Style";
 import DateTimePicker from '@react-native-community/datetimepicker';
 const { width } = Dimensions.get('screen')
@@ -17,8 +17,8 @@ export const M = (props) => {
                 }}>
                 <View style={[Style.Shadow, { marginTop: 22, backgroundColor: "transparent", flex: 1, alignItems: "center", justifyContent: "center" }]}>
                     {/* <View style={{backgroundColor:"gray", }}> */}
-                    <Picker
-                        mode="dropdown"
+                    {/* <Picker
+                        mode="dialog"
                         selectedValue={props.selectedValue}
                         itemStyle={[{ backgroundColor: "#fff", padding: 10, color: "orange" }]}
                         style={[{ width: width / 2 }]}
@@ -26,7 +26,19 @@ export const M = (props) => {
                         <Picker.Item label="Select Account Role" value={0} />
                         <Picker.Item label="Admin" value={1} />
                         <Picker.Item label="Normal User" value={2} />
-                    </Picker>
+                    </Picker> */}
+
+                    <View style={{backgroundColor:"#fff", padding:20, width:"80%", borderRadius: 10}}>
+                        <TouchableOpacity onPress={props.Selected.bind(null, 1)}>
+                            <Text style={{fontSize: 16, fontWeight:"bold"}}>Admin</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity 
+                                onPress={props.Selected.bind(null, 2)}
+                                style={{marginTop: 10}}>
+                            <Text style={{ fontSize: 16, fontWeight: "bold" }}>Normal User</Text>
+                        </TouchableOpacity>
+                    </View>
                     {/* </View> */}
                 </View>
             </Modal>
@@ -35,7 +47,7 @@ export const M = (props) => {
 }
 
 export const DateTime = (props) => {
-    console.log('date time')
+    
     return (
         <View style={{flex: 1, position:"absolute", backgroundColor:"green"}}>
             {/* <Modal

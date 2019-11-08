@@ -20,7 +20,8 @@ const CreateEmployee = (props) => {
 
     const [modalVisible, setModalVisible] = useState(false)
     const Update = (property, val) => {
-
+        
+        
         let tempObj = credentials
         tempObj[property] = val
         
@@ -42,8 +43,8 @@ const CreateEmployee = (props) => {
     return (
         <SafeAreaView style={{ flex: 1, width: "100%" }}>
             <ModalComponent
+                Selected={(val) => Update('role_id', val)}
                 Visible={modalVisible}
-                selectedValue={credentials.role_id}
                 onValueChange={Update.bind(this, 'role_id')}
             />
         <ScrollView contentContainerStyle={{flexGrow: 1}}>

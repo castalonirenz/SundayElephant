@@ -12,8 +12,6 @@ const Pixel = PixelRatio.get()
   constructor(props) {
     super(props);
     this.state = {
-      username:"Admin",
-      password:"secret"
     };
   }
 
@@ -23,10 +21,11 @@ const Pixel = PixelRatio.get()
     this.state.username === undefined ? this.setState({username: ''}) : null
     this.state.password === undefined ? this.setState({password: '' }) : null
 
-    if(this.state.password !== "" && this.state.username !== ""){
+    if(this.state.password !== "" || this.state.username !== "" || this.state.username !== undefined || this.state.password !== undefined){
       this.props.Auth(this.state)
       .then(success => {
-        success ? this.props.navigation.navigate('Drawer') : 'Login failed'
+        // alert(success)
+        success ? this.props.navigation.navigate('Drawer') : alert('Log in failed')
       })
     }
   }
@@ -49,8 +48,10 @@ const Pixel = PixelRatio.get()
 
           <View style={{ width: "80%", marginTop: 20 }}>
           <TextInput
+            autoCapitalize={"none"}
             placeholder="Username"
             onChangeText={(val) => this.setState({username: val})}
+            keyboardType="twitter"
             style={{
               borderBottomWidth: 0.5,
               padding: 10,
@@ -61,6 +62,7 @@ const Pixel = PixelRatio.get()
           <Text style={{color:"red"}}>{this.state.username === "" ? "Username is required" : null}</Text>
 
             <TextInput
+              autoCapitalize={"none"}
               placeholder="Password"
               secureTextEntry={true}
               onChangeText={(val) => this.setState({ password: val })}

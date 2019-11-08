@@ -1,7 +1,7 @@
-import { SHOW_EMPLOYEE } from "../actionType";
+import { SHOW_EMPLOYEE, LOG_OUT } from "../actionType";
 
 const initialState = {
-    employeeList: []
+    employeeList: [],
 }
 
 const AuthReducer = (state = initialState, action) => {
@@ -10,7 +10,11 @@ const AuthReducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                employeeList: action.list
+                employeeList: action.list,
+            }
+        case LOG_OUT:
+            return{
+                employeeList: []
             }
         default:
             return state

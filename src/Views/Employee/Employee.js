@@ -14,13 +14,13 @@ const Employee = (props) => {
 
 
     useEffect(() => {
-        console.log('im not called?')
+        
         props.loadEmployee()
 
     }, [])
 
     const RenderItem = ({ item }) => {
-        console.log(item, "--> output")
+        
         return (
             <View style={{ padding: 10, flexDirection: "row", alignItems: "center" }}>
                 <Image
@@ -46,6 +46,7 @@ const Employee = (props) => {
             <FlatList
                 data={props.EmployeeList}
                 renderItem={RenderItem.bind(this)}
+                extraData={props.EmployeeList}
             // keyExtractor={item => item.id}
             />
 

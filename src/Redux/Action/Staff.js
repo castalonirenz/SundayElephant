@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { NEW_STAFF } from "../actionType";
+import { NEW_STAFF, SHOW_EMPLOYEE } from "../actionType";
 
 export const addStaff = (data) => {
     
@@ -14,18 +14,25 @@ export const addStaff = (data) => {
             password: data.password
         })
         .then((response => {
-            console.log(response)
-
             if(response.data.error_msg === null){
-                console.log(response.data.data)
-                return true
+
+                dispatch(setEmployee(response.data.data))
+                return true  
+           
             }
             else{
                 return false
             }
         }))
         .catch(error => {
-            
+                return false
         })
+    }
+}
+
+const setEmployee = (data) => {
+    return {
+        type: SHOW_EMPLOYEE,
+        list: data
     }
 }
