@@ -48,8 +48,8 @@ const CustomDrawer = (props) => {
 
     return (
 
-        <ScrollView style={{ width: "100%" }}>
-            <SafeAreaView style={{ flex: 1, width: "100%" }}>
+        <ScrollView contentContainerStyle={{flexGrow: 1}} style={{ width: "100%" }}>
+            <SafeAreaView style={{ flex: 1, width: "100%", backgroundColor:"#16242a" }}>
 
                 <ImageBackground
                     resizeMode="cover"
@@ -72,7 +72,7 @@ const CustomDrawer = (props) => {
                     onPress={()=> logOut()}
                     style={{ flexDirection: "row", marginLeft: 18, marginTop: 10, alignItems: "center" }}>
                     <FontAwesomeIcon icon={faSignOutAlt} size={25} color="gray" />
-                    <Text style={{ fontSize: 14, fontWeight: "bold", marginLeft: 28 }}>Signout</Text>
+                    <Text style={{ fontSize: 14, fontWeight: "bold", marginLeft: 28, color:"#fff" }}>Signout</Text>
                 </TouchableOpacity>
             </SafeAreaView>
         </ScrollView>
@@ -131,8 +131,10 @@ const Drawer = createDrawerNavigator({
     // }
 }, {
     contentComponent: connect(mapStateToProps, dispatchToProps)(withNavigation(CustomDrawer)),
+    drawerType:"slide",
     contentOptions: {
         activeTintColor: "orange",
+        inactiveTintColor:"#fff"
     }
 })
 

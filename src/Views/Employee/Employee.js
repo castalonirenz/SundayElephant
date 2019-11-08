@@ -37,7 +37,7 @@ const Employee = (props) => {
 
 
     return (
-        <SafeAreaView style={{ flex: 1, }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor:"#16242a"}}>
             <HeaderComponent
                 Icon={faBars}
                 Toggle={() => props.navigation.dispatch(DrawerActions.toggleDrawer())}

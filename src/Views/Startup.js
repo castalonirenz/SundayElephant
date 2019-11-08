@@ -12,6 +12,8 @@ const Pixel = PixelRatio.get()
   constructor(props) {
     super(props);
     this.state = {
+      username: 'admin',
+      password:'secret'
     };
   }
 
@@ -32,7 +34,7 @@ const Pixel = PixelRatio.get()
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor:"#16242a" }}>
         {/* <ImageBackground
           resizeMode="stretch"
           source={require('../Assets/Background/InititialBackground.jpg')}
@@ -50,13 +52,16 @@ const Pixel = PixelRatio.get()
           <TextInput
             autoCapitalize={"none"}
             placeholder="Username"
+            placeholderTextColor="#c5c5c5"
             onChangeText={(val) => this.setState({username: val})}
             keyboardType="twitter"
             style={{
               borderBottomWidth: 0.5,
               padding: 10,
               fontSize: 18,
-              fontWeight:"bold"
+              fontWeight:"bold",
+              color:"#fff",
+              borderBottomColor:"#fff"
             }}
           />
           <Text style={{color:"red"}}>{this.state.username === "" ? "Username is required" : null}</Text>
@@ -65,13 +70,16 @@ const Pixel = PixelRatio.get()
               autoCapitalize={"none"}
               placeholder="Password"
               secureTextEntry={true}
+              placeholderTextColor="#c5c5c5"
               onChangeText={(val) => this.setState({ password: val })}
               style={{
                 borderBottomWidth: 0.5,
                 padding: 10,
                 marginTop: 40,
                 fontSize: 18,
-                fontWeight: "bold"
+                fontWeight: "bold",
+                color: "#fff",
+                borderBottomColor: "#fff"
               }}
             />
             <Text style={{ color: "red" }}>{this.state.password === "" ? "Password is required" : null}</Text>

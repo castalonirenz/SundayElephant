@@ -4,7 +4,7 @@ const initialState = {
     employeeList: [],
 }
 
-const AuthReducer = (state = initialState, action) => {
+const EmployeeReducer = (state = initialState, action) => {
     switch (action.type) {
         case SHOW_EMPLOYEE:
 
@@ -21,4 +21,4 @@ const AuthReducer = (state = initialState, action) => {
     }
 }
 
-export default AuthReducer
+export default EmployeeReducer
