@@ -19,10 +19,10 @@ import { connect } from "react-redux";
 const CustomDrawer = (props) => {
     let currentRoute = props.navigation.state.routes[props.navigation.state.index].routeName
 
-    console.log(props.Credentials.full_name, "---> drawer")
+    
 
     return (
-        console.log(props.navigation.state.routes[props.navigation.state.index].routeName),
+        
         <ScrollView style={{ width: "100%" }}>
             <SafeAreaView style={{ flex: 1, width: "100%" }}>
 

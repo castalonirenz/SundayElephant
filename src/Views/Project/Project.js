@@ -19,7 +19,7 @@ const Project = (props) => {
             />
 
             <TouchableOpacity
-                onPress={() => props.navigation.navigate('AddEmployee')}
+                onPress={() => props.navigation.navigate('AddProject')}
                 style={[Style.Shadow, {
                     width: 60,
                     height: 60,

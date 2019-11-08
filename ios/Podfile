@@ -35,7 +35,7 @@ target 'My' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
-
+pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec'
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 pod 'GoogleSignIn', '~> 5.0.0'
 pod 'Firebase/Analytics'

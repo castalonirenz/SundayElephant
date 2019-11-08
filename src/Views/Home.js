@@ -43,8 +43,6 @@ const Home = (props) => {
         Icon={faBars}
         Toggle={() => props.navigation.dispatch(DrawerActions.toggleDrawer())}
       />
-  
-      <Button onPress={() => props.navigation.dispatch(DrawerActions.toggleDrawer())} title="sesame"></Button>
       <CalendarComponent
         current={today}
         markedDates={markedDates}

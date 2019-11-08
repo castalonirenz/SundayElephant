@@ -2,157 +2,87 @@ import React, { useState, useEffect } from "react";
 import { TextInput, Text, TouchableOpacity, SafeAreaView, Image, Picker, View, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
-import { ModalComponent } from "../../Components/indexComponent";
+import { ModalComponent , DatePickerComponent} from "../../Components/indexComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { addStaff } from "../../Redux/Action/Staff";
+import { DatePicker } from 'native-base';
+import moment from 'moment'
 const CreateProject = (props) => {
-    const [credentials, setCredentials] = useState({
-        email: null,
-        full_name: null,
-        address: null,
-        phone_no: null,
-        username: null,
-        password: null,
-        role_id: null
+    const [project, setProject] = useState({
+        project_name: null,
+        project_description: null,
+        start_date: moment().toDate(),
+        end_date: null
 
     })
+    const [startDate, showStartDate] = useState(false)
+    const [endDate, showEndDate] = useState(false)
 
-    const [modalVisible, setModalVisible] = useState(false)
-    const Update = (property, val) => {
-
-        let tempObj = credentials
-        tempObj[property] = val
-        console.log(tempObj, "--> before merge", property)
-        setCredentials(prevCredentials => ({ ...prevCredentials, ...tempObj }))
-        property === "role_id" ? setModalVisible(false) : null
+    const Update = (property, val, date) => {
+        console.log(date)
+        date === undefined ? showStartDate(false) : null
+        // let tempObj = project
+        // tempObj[property] = val
+        // setProject(prevCredentials => ({ ...prevCredentials, ...tempObj }))
     }
 
     useEffect(() => {
-        console.log(credentials.role_id, 'use effect', [])
+        console.log(moment, "--> initial start date")
     })
 
 
     const register = () => {
-        props.AddStaff(credentials)
+        props.AddStaff(project)
             .then(success => {
                 success ? props.navigation.goBack() : alert('creation failed')
             })
     }
     return (
         <SafeAreaView style={{ flex: 1, width: "100%" }}>
-            <ModalComponent
-                Visible={modalVisible}
-                selectedValue={credentials.role_id}
-                onValueChange={Update.bind(this, 'role_id')}
+
+            {startDate ? <DatePickerComponent
+
+                onCancel={() => console.log('cancelled')}
+                dateTimeVisible={startDate}
+                value={project.start_date}
+                onChange={Update.bind(this, "start_date")}
             />
-            <ScrollView>
-                <View style={{ flex: 1, alignItems: "center" }}>
+            : null}
+
+            <ScrollView style={{ width: "100%" }} contentContainerStyle={{ flexGrow: 1 }}>
+                <View style={{ flex: 1, alignItems: "center", backgroundColor: "#16242a" }}>
                     <Image
                         resizeMode="contain"
-                        style={{ width: 200 }}
-                        source={require('../../Assets/icon/logo.png')} />
+                        style={{ width: 150, height: 150, marginTop: 20 }}
+                        source={require('../../Assets/icon/job.png')} />
 
                     <TextInput
-                        placeholder="Email:"
-                        onChangeText={Update.bind(this, 'email')}
+                        placeholder="Enter Project Name:"
+                        onChangeText={Update.bind(this, 'project_name')}
                         style={{
                             borderBottomWidth: 0.5,
+                            marginTop: 20,
                             padding: 10,
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: "bold",
-                            width: "80%"
+                            width: "90%",
+                            backgroundColor:"#fff",
+                            borderRadius: 10,
+                            padding: 15
                         }}
                     />
 
-                    <TextInput
-                        placeholder="Name:"
-                        onChangeText={Update.bind(this, 'full_name')}
-                        style={{
-                            borderBottomWidth: 0.5,
-                            padding: 10,
-                            fontSize: 18,
-                            fontWeight: "bold",
-                            width: "80%",
-                            marginTop: 20
-                        }}
-                    />
+                    <View style={{width:"100%", flexDirection:"row", justifyContent:"space-around",  padding: 10}}>
 
-                    <TextInput
-                        placeholder="Address:"
-                        onChangeText={Update.bind(this, 'address')}
-                        style={{
-                            borderBottomWidth: 0.5,
-                            padding: 10,
-                            fontSize: 18,
-                            fontWeight: "bold",
-                            width: "80%",
-                            marginTop: 20
-                        }}
-                    />
-
-                    <TextInput
-                        placeholder="Phone No:"
-                        keyboardType={"phone-pad"}
-                        onChangeText={Update.bind(this, 'phone_no')}
-                        style={{
-                            borderBottomWidth: 0.5,
-                            padding: 10,
-                            fontSize: 18,
-                            fontWeight: "bold",
-                            width: "80%",
-                            marginTop: 20
-                        }}
-                    />
-
-                    <TouchableOpacity
-                        style={{ flexDirection: "row", width: "80%", padding: 10, alignItems: "center", justifyContent: "space-between", marginTop: 20 }}
-                        onPress={() => setModalVisible(true)}
-                    >
-                        <Text style={{ fontSize: 16 }}>
-                            {credentials.role_id === null ? "Select Account Role" : credentials.role_id === 1 ? "Admin" : "Normal User"}
-                        </Text>
-
-                        <FontAwesomeIcon icon={faCaretDown} />
-
-
-                    </TouchableOpacity>
-
-
-
-                    <TextInput
-                        placeholder="Username:"
-                        onChangeText={Update.bind(this, 'username')}
-                        style={{
-                            borderBottomWidth: 0.5,
-                            padding: 10,
-                            fontSize: 18,
-                            fontWeight: "bold",
-                            width: "80%",
-                            marginTop: 20
-                        }}
-                    />
-                    <TextInput
-                        placeholder="Password:"
-                        onChangeText={Update.bind(this, 'password')}
-                        secureTextEntry={true}
-                        style={{
-                            borderBottomWidth: 0.5,
-                            padding: 10,
-                            fontSize: 18,
-                            fontWeight: "bold",
-                            width: "80%",
-                            marginTop: 20
-                        }}
-                    />
-
-
-                    <View style={{ alignSelf: "flex-end", marginTop: 10, marginRight: 30 }}>
-                        <TouchableOpacity
-                            onPress={() => register()}
-                            style={{ backgroundColor: "#c5c5c5", padding: 15, borderRadius: 5 }}>
-                            <Text style={{ fontWeight: "bold" }}>CREATE</Text>
-                        </TouchableOpacity>
+                  
+                            <TouchableOpacity
+                                style={{width:"40%", backgroundColor:"#fff", alignItems:"center", justifyContent:"center", borderRadius: 10, marginTop: 20, padding: 15}}
+                                onPress={()=> showStartDate(true)}
+                                >
+                                <Text style={{width:"40%"}}>{project.start_date === null ? "Start Date" : "boom"}</Text>
+                            </TouchableOpacity>
+           
                     </View>
                 </View>
             </ScrollView>

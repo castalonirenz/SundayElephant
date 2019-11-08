@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, SafeAreaView, ScrollView, ImageBackground, PixelRatio, Button, Image, TextInput } from 'react-native';
-import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-community/google-signin';
 import { ThemeResponsive } from "../Themes/Theme";
 import { Title, DrawerLabel } from "../Themes/StyledComponent";
 import { connect } from "react-redux";

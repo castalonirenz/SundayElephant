@@ -2,7 +2,7 @@ import axios from 'axios'
 import { NEW_STAFF } from "../actionType";
 
 export const addStaff = (data) => {
-    console.log(data, "--> registering")
+    
     return dispatch => {
        return axios.post('http://sunday.fitnessforlifetoday.com/api/register_save',{
             role_id: data.role_id,
@@ -17,6 +17,7 @@ export const addStaff = (data) => {
             console.log(response)
 
             if(response.data.error_msg === null){
+                console.log(response.data.data)
                 return true
             }
             else{
@@ -24,7 +25,7 @@ export const addStaff = (data) => {
             }
         }))
         .catch(error => {
-            console.log(error)
+            
         })
     }
 }

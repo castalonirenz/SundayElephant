@@ -23,13 +23,13 @@ const CreateEmployee = (props) => {
 
         let tempObj = credentials
         tempObj[property] = val
-        console.log(tempObj, "--> before merge", property)
+        
         setCredentials(prevCredentials => ({ ...prevCredentials, ...tempObj }))
         property === "role_id" ? setModalVisible(false) : null
     }
 
     useEffect(() => {
-        console.log(credentials.role_id, 'use effect', [])
+        
     })
 
 
@@ -46,8 +46,8 @@ const CreateEmployee = (props) => {
                 selectedValue={credentials.role_id}
                 onValueChange={Update.bind(this, 'role_id')}
             />
-        <ScrollView>
-            <View style={{flex: 1, alignItems:"center"}}>
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+                <View style={{ flex: 1, alignItems: "center", backgroundColor: "#16242a" }}>
                     <Image
                         resizeMode="contain"
                         style={{ width: 200 }}
@@ -55,18 +55,21 @@ const CreateEmployee = (props) => {
 
                     <TextInput
                         placeholder="Email:"
+                         placeholderTextColor="#fff"
                         onChangeText={Update.bind(this, 'email')}
                         style={{
                             borderBottomWidth: 0.5,
                             padding: 10,
                             fontSize: 18,
                             fontWeight: "bold",
-                            width: "80%"
+                            width: "80%",
+                            color:"#fff",
                         }}
                     />
 
                     <TextInput
                         placeholder="Name:"
+                        placeholderTextColor="#fff"
                         onChangeText={Update.bind(this, 'full_name')}
                         style={{
                             borderBottomWidth: 0.5,
@@ -74,12 +77,14 @@ const CreateEmployee = (props) => {
                             fontSize: 18,
                             fontWeight: "bold",
                             width: "80%",
-                            marginTop: 20
+                            marginTop: 20,
+                            color:"#fff",
                         }}
                     />
 
                     <TextInput
                         placeholder="Address:"
+                         placeholderTextColor="#fff"
                         onChangeText={Update.bind(this, 'address')}
                         style={{
                             borderBottomWidth: 0.5,
@@ -87,12 +92,14 @@ const CreateEmployee = (props) => {
                             fontSize: 18,
                             fontWeight: "bold",
                             width: "80%",
-                            marginTop: 20
+                            marginTop: 20,
+                            color:"#fff",
                         }}
                     />
 
                     <TextInput
                         placeholder="Phone No:"
+                         placeholderTextColor="#fff"
                         keyboardType={"phone-pad"}
                         onChangeText={Update.bind(this, 'phone_no')}
                         style={{
@@ -101,7 +108,8 @@ const CreateEmployee = (props) => {
                             fontSize: 18,
                             fontWeight: "bold",
                             width: "80%",
-                            marginTop: 20
+                            marginTop: 20,
+                            color:"#fff",
                         }}
                     />
 
@@ -109,11 +117,11 @@ const CreateEmployee = (props) => {
                         style={{ flexDirection: "row", width: "80%", padding: 10, alignItems: "center", justifyContent: "space-between", marginTop: 20 }}
                         onPress={() => setModalVisible(true)}
                     >
-                        <Text style={{ fontSize: 16 }}>
+                        <Text style={{ fontSize: 16, color:"#fff" }}>
                             {credentials.role_id === null ? "Select Account Role" : credentials.role_id === 1 ? "Admin" : "Normal User"}
                         </Text>
 
-                        <FontAwesomeIcon icon={faCaretDown} />
+                        <FontAwesomeIcon icon={faCaretDown} color={"#fff"}/>
 
 
                     </TouchableOpacity>
@@ -122,6 +130,7 @@ const CreateEmployee = (props) => {
 
                     <TextInput
                         placeholder="Username:"
+                        placeholderTextColor="#fff"
                         onChangeText={Update.bind(this, 'username')}
                         style={{
                             borderBottomWidth: 0.5,
@@ -129,20 +138,23 @@ const CreateEmployee = (props) => {
                             fontSize: 18,
                             fontWeight: "bold",
                             width: "80%",
-                            marginTop: 20
+                            marginTop: 20,
+                            color:"#fff"
                         }}
                     />
                     <TextInput
                         placeholder="Password:"
                         onChangeText={Update.bind(this, 'password')}
                         secureTextEntry={true}
+                        placeholderTextColor="#fff"
                         style={{
                             borderBottomWidth: 0.5,
                             padding: 10,
                             fontSize: 18,
                             fontWeight: "bold",
                             width: "80%",
-                            marginTop: 20
+                            marginTop: 20,
+                            color:"#fff"
                         }}
                     />
 

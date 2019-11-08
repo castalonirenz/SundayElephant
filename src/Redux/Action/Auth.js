@@ -8,9 +8,9 @@ export const Login =(credentials) => {
             password: credentials.password
         })
             .then((response) => {
-                console.log(response)
+                
                 if (!response.data.error) {
-                    console.log(response.data.data, "--> response from sign in")
+                    
                     dispatch(SET_CREDENTIALS(response.data.data))
                     alert('log in success')
                     
@@ -22,7 +22,7 @@ export const Login =(credentials) => {
                 }
             })
             .catch((err => {
-                console.log(err)
+                
                 return false
             }))
     }

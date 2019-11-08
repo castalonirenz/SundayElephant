@@ -7,13 +7,13 @@ const initialState ={
 const AuthReducer = (state = initialState, action) => {
     switch(action.type){
         case GOOGLE_SIGIN:
-            console.log(action.credentials, "--> credentals")
+            
             return{
                 ...state,
                 info: action.credentials
             }
         case SIGN_IN:
-            console.log(action.credentials, "--> credentals")
+            
             return {
                 ...state,
                 info: action.credentials

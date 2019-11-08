@@ -2,7 +2,7 @@ import { Calendar } from "react-native-calendars";
 import React from "react";
 import moment from "moment";
 export const Calendars = (props) => {
-    console.log(moment().format('YYYY-DD-MM'))
+    
     let today = moment().format('YYYY-MM-DD')
     return(
         <Calendar
@@ -17,11 +17,11 @@ export const Calendars = (props) => {
             // Handler which gets executed on day press. Default = undefined
             onDayPress={props.DayPress}
             // Handler which gets executed on day long press. Default = undefined
-            onDayLongPress={(day) => { console.log('selected day', day) }}
+            onDayLongPress={(day) => {  }}
             // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
             monthFormat={'MMMM yyyy'}
             // Handler which gets executed when visible month changes in calendar. Default = undefined
-            onMonthChange={(month) => { console.log('month changed', month) }}
+            onMonthChange={(month) => {  }}
             // Hide month navigation arrows. Default = false
             hideArrows={false}
             // Replace default arrows with custom ones (direction can be 'left' or 'right')
