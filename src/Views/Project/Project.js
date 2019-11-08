@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, TextInput, FlatList, Image } from "react-native";
+import React, { useState, useEffect, useCallback } from 'react'
+import { SafeAreaView, View, Text, TouchableOpacity, TextInput, FlatList, Image, RefreshControl } from "react-native";
 import { HeaderComponent } from '../../Components/indexComponent';
 import { withNavigation } from "react-navigation";
 import { DrawerActions } from 'react-navigation-drawer';
@@ -10,7 +10,7 @@ import { loadProjects } from "../../Redux/Action/Project";
 import { connect } from "react-redux";
 const Project = (props) => {
     const [showAddEmployee, setShowAddEmployee] = useState(false)
-
+    const [refreshing, setRefreshing] = useState(false)
     useEffect(() => {
 
         props.loadProject()
@@ -34,6 +34,15 @@ const Project = (props) => {
         )
     }
 
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        props.loadProject()
+            .then(stop => {
+                setRefreshing(false)
+            })
+        // wait(2000).then(() => setRefreshing(false));
+    }, [refreshing]);
+
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor:"#16242a"}}>
@@ -43,6 +52,11 @@ const Project = (props) => {
             />
 
             <FlatList
+                refreshControl={
+                    <RefreshControl
+                        onRefresh={onRefresh}
+                        refreshing={refreshing} />
+                }
                 data={props.ProjectList}
                 renderItem={RenderItem.bind(this)}
                 extraData={props.ProjectList}

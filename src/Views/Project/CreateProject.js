@@ -8,7 +8,9 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { addStaff } from "../../Redux/Action/Staff";
 import { DatePicker } from 'native-base';
 import { addProject } from "../../Redux/Action/Project";
+import { HeaderComponent } from "../../Components/indexComponent";
 import moment from 'moment'
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 const CreateProject = (props) => {
     const [project, setProject] = useState({
         project_name: null,
@@ -115,6 +117,10 @@ const CreateProject = (props) => {
     }
     return (
         <SafeAreaView style={{ flex: 1, width: "100%" }}>
+            <HeaderComponent
+                Icon={faArrowLeft}
+                Toggle={()=> props.navigation.goBack()}
+            />
 
             {startDate ? <DatePickerComponent
 

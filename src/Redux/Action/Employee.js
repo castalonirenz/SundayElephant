@@ -4,14 +4,15 @@ import { SHOW_EMPLOYEE } from '../actionType'
 
 export const showEmployee = () => {
     return dispatch => {
-        axios.post('http://sunday.fitnessforlifetoday.com/api/employeList')
+       return axios.post('http://sunday.fitnessforlifetoday.com/api/employeList')
             .then((response) => {
 
                 
                 dispatch(setEmployee(response.data.data))
+                return true
             })
             .catch((err => {
-                    
+                return true
             }))
     }
 }

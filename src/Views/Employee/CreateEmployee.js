@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { TextInput, Text, TouchableOpacity, SafeAreaView, Image, Picker, View , ScrollView} from "react-native";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
-import { ModalComponent } from "../../Components/indexComponent";
+import { ModalComponent, HeaderComponent } from "../../Components/indexComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faCaretDown} from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import { addStaff } from "../../Redux/Action/Staff";
 const CreateEmployee = (props) => {
     const [credentials, setCredentials] = useState({
@@ -42,6 +42,10 @@ const CreateEmployee = (props) => {
     }
     return (
         <SafeAreaView style={{ flex: 1, width: "100%" }}>
+            <HeaderComponent
+                Icon={faArrowLeft}
+                Toggle={() => props.navigation.goBack()}
+            />
             <ModalComponent
                 Selected={(val) => Update('role_id', val)}
                 Visible={modalVisible}

@@ -38,22 +38,24 @@ export const addProject = (data) => {
 
 export const loadProjects = () => {
     return dispatch => {
-        axios.post('http://sunday.fitnessforlifetoday.com/api/projectList')
+       return axios.post('http://sunday.fitnessforlifetoday.com/api/projectList')
             .then((response) => {
                 console.log(response)
                 if (response.data.error_msg === null) {
                     // return true
                     dispatch(setProject(response.data.data))
+                    return true
                 }
                 else {
                     // return false
                     alert('error getting project list')
+                    return false
                 }
 
             })
             .catch((err => {
             
-
+                return false
             }))
 
     
