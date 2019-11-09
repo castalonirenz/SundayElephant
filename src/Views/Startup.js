@@ -12,8 +12,8 @@ const Pixel = PixelRatio.get()
   constructor(props) {
     super(props);
     this.state = {
-      username: 'sunday',
-      password:'elephant'
+      username: 'admin',
+      password:'secret'
     };
   }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, View, Text, Picker, Alert, TouchableHighlight, Dimensions, TouchableOpacity } from "react-native";
+import { Modal, View, Text, Picker, Alert, TouchableHighlight, Dimensions, TouchableOpacity, SafeAreaView } from "react-native";
 import { Style } from "../utils/Style";
 import DateTimePicker from '@react-native-community/datetimepicker';
 const { width } = Dimensions.get('screen')
@@ -49,17 +49,17 @@ export const M = (props) => {
 export const DateTime = (props) => {
     
     return (
-        <View style={{flex: 1, position:"absolute", backgroundColor:"green"}}>
+        // <SafeAreaView style={{flex: 1,  backgroundColor:"green", justifyContent:"center", alignItems:"center"}}>
          
                     <DateTimePicker 
                         onTouchCancel={props.onCancel}
                         value={props.value}
-                        // style={{ backgroundColor: "#fff", height: 200, width: 350, position: "absolute", zIndex: 9999, borderRadius: 10 }}
+                        // style={{ backgroundColor: "#fff", height: 200, width: 350,  borderRadius: 10 }}
                         mode={props.mode}
                         is24Hour={true}
-                        display="default"
+                        // display="default"
                         onChange={props.onChange} />
          
-        </View>
+        // </SafeAreaView>
     )
 }

@@ -10,36 +10,40 @@ import axios from 'axios'
 const ProjectDetails = (props) => {
     const projectDetails = props.navigation.getParam('project', null)
     const [project, setProject] = useState(projectDetails)
+    const [remainingHours, setRemainingHours] = useState("")
+    const [totalHours, setTotalHours] = useState("")
     const [tasks, setTasks] = useState([])
     useEffect(() => {
 
-        
+
         getProjectDetails()
     }, [])
 
     const getProjectDetails = () => {
         const projectDetails = props.navigation.getParam('project', null)
-        
+
         axios.post('http://sunday.fitnessforlifetoday.com/api/viewProject', {
             project_id: projectDetails.id
         })
             .then((response) => {
-                
+
                 console.log(response)
                 setTasks(response.data.data.tasks)
+                setRemainingHours(response.data.data.remainingHours)
+                setTotalHours(response.data.data.totalHours)
 
             })
             .catch((err => {
-                
+
                 alert('Error getting project details')
             }))
     }
 
     const colorIndicator = (status) => {
-        if(status === "ongoing"){
+        if (status === "ongoing") {
             return "#4287f5"
         }
-        else if(status === "done"){
+        else if (status === "done") {
             return "green"
         }
         else if (status === "incoming") {
@@ -50,8 +54,14 @@ const ProjectDetails = (props) => {
         }
     }
 
+    const createTask = () => {
+        props.navigation.navigate('CreateTask', 
+            {project_id: project.id}
+        )
+    }
+
     const Task = (props) => {
-        
+
         let ArrayShit = props.tasksData
         let TaskComponent =
             ArrayShit.map((items, index) => (
@@ -88,7 +98,7 @@ const ProjectDetails = (props) => {
 
             })
             .catch((err => {
-                
+
                 alert('Error updating project details')
             }))
     }
@@ -110,8 +120,8 @@ const ProjectDetails = (props) => {
                         <Text style={{ fontWeight: "bold", color: "orange", fontSize: 20 }}>{project.project_name}</Text>
                         <View style={{ marginTop: 20 }}>
                             <Text style={{ color: "orange", fontSize: 16 }}>{project.status}</Text>
-                            <Text style={{ color: "#fff", fontSize: 16 }}>Remaining hours</Text>
-                            <Text style={{ color: "#fff", fontSize: 16 }}>Total hours</Text>
+                            <Text style={{ color: "#fff", fontSize: 16 }}>Remaining hours: {remainingHours}</Text>
+                            <Text style={{ color: "#fff", fontSize: 16 }}>Total hours: {totalHours}</Text>
                         </View>
                     </View>
                 </View>
@@ -127,7 +137,7 @@ const ProjectDetails = (props) => {
                 </View>
 
                 <TouchableOpacity
-                    onPress={()=>UpdateStatus('done')}
+                    onPress={() => UpdateStatus('done')}
                     style={{ width: "60%", padding: 15, borderRadius: 25, backgroundColor: "green", alignSelf: "center", alignItems: "center", marginTop: 20 }}>
                     <Text style={{ fontSize: 14, color: "#fff", fontWeight: "bold" }}>MARK AS COMPLETE</Text>
                 </TouchableOpacity>
@@ -162,7 +172,7 @@ const ProjectDetails = (props) => {
 
             </View>
             <TouchableOpacity
-                // onPress={() => props.navigation.navigate('AddProject')}
+                onPress={() => createTask()}
                 style={[Style.Shadow, {
                     width: 60,
                     height: 60,
@@ -182,9 +192,9 @@ const ProjectDetails = (props) => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return{
+    return {
         loadProject: () => dispatch(loadProjects())
     }
 }
 
-export default connect(null,mapDispatchToProps)(ProjectDetails)
+export default connect(null, mapDispatchToProps)(ProjectDetails)

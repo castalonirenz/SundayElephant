@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextInput, Text, TouchableOpacity, SafeAreaView, Image, Picker, View, ScrollView, Platform } from "react-native";
+import { TextInput, Text, TouchableOpacity, SafeAreaView, Image, Picker, View, ScrollView, Platform, FlatList, RefreshControl } from "react-native";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
 import { ModalComponent, DatePickerComponent } from "../../Components/indexComponent";
@@ -7,11 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { addStaff } from "../../Redux/Action/Staff";
 import { DatePicker } from 'native-base';
-import { addProject } from "../../Redux/Action/Project";
+import { addTask } from "../../Redux/Action/Task";
 import { HeaderComponent } from "../../Components/indexComponent";
 import moment from 'moment'
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-const CreateProject = (props) => {
+import axios from "axios";
+const CreateTasks = (props) => {
     const [project, setProject] = useState({
         project_name: null,
         project_description: null,
@@ -19,8 +20,12 @@ const CreateProject = (props) => {
         end_date: (moment().add(4, 'days')).toDate(),
         start_time: moment().toDate(),
         end_time: moment().toDate(),
+        user_id: null,
+        project_id: props.navigation.getParam('project_id', null)
 
     })
+
+    const [userList, setUserList] = useState(false)
 
     const [startDate, showStartDate] = useState(false)
     const [startTime, showStartTime] = useState(false)
@@ -29,24 +34,24 @@ const CreateProject = (props) => {
     const [endTime, showEndTime] = useState(false)
 
     const Update = (property, action, date) => {
-        console.log(property, "--> property")
-        console.log(action, "-->action")
-        console.log(date, "---> data")
+        
+        
+        
         date === undefined ? showStartDate(false) : null
         date === undefined ? showStartTime(false) : null
 
         date === undefined ? showEndDate(false) : null
         date === undefined ? showEndTime(false) : null
-        if (property === "project_name") {
-            console.log('here')
+        if (property === "project_name" || property === "project_description" || property === "user_id") {
+            
             let tempObj = project
             tempObj[property] = action
             setProject(prevCredentials => ({ ...prevCredentials, ...tempObj }))
         }
         if (action.type === "set" || Platform.OS === "ios") {
-            console.log('set')
+            
             if (property === "start_date") {
-                console.log(moment(date).isAfter(project.end_date))
+                
                 if (moment(date).isAfter(project.end_date)) {
                     alert('Start date must not overlap end date')
                     showStartDate(false)
@@ -73,7 +78,7 @@ const CreateProject = (props) => {
                     showEndTime(false)
                 }
                 else {
-                    console.log('set to false dapat')
+                    
                     let tempObj = project
                     tempObj[property] = date
                     showStartDate(false)
@@ -83,7 +88,7 @@ const CreateProject = (props) => {
                     setProject(prevCredentials => ({ ...prevCredentials, ...tempObj }))
                 }
             }
-            else if(property === "start_time" || property === "end_time"){
+            else if (property === "start_time" || property === "end_time") {
                 let tempObj = project
                 tempObj[property] = date
                 showStartDate(false)
@@ -109,44 +114,85 @@ const CreateProject = (props) => {
     }
 
     useEffect(() => {
-        console.log(project, "effects")
-    },[])
+        console.log(project, "--> task details")
+        axios.post('http://sunday.fitnessforlifetoday.com/api/showTask')
+            .then((response) => {
+
+                
+                setUserList(response.data.data)
+            })
+            .catch((err => {
+
+               alert('error getting employee list')
+            }))
+    }, [project.user_id])
 
 
     const addNewProject = () => {
-        if(!project.project_name){
+        if (!project.project_name) {
             alert('project name is required')
         }
-        else if(project.project_name){
-            props.AddProject(project)
-            .then(success => {
-                success ? props.navigation.goBack() : null
-            })
+        else if (project.project_name) {
+            props.AddTask(project)
+                .then(success => {
+                    success ? props.navigation.goBack() : null
+                })
         }
-      
+
+
+    }
+
+    const RenderItem = ({ item }) => {
         
+        return (
+            <TouchableOpacity
+                onPress={() => Update("user_id",item.id)}
+                style={{ padding: 10, flexDirection: "row", alignItems: "center", borderRadius: 10,borderWidth: item.id === project.user_id ? 5 : 0, borderColor: item.id === project.user_id ? "orange" : null  }}>
+                <Image
+                    resizeMode="contain"
+                    style={{ width: 100, height: 100, borderRadius: 50, borderColor: "orange" }}
+                    source={require('../../Assets/icon/avatar.png')}
+                />
+                <Text style={{ fontSize: 24, fontWeight: "bold", marginLeft: 20, color: "green" }}>
+                    {item.full_name}
+         
+                </Text>
+            </TouchableOpacity>
+        )
     }
     return (
         <SafeAreaView style={{ flex: 1, width: "100%" }}>
             <HeaderComponent
-                headerText={"Create Project"}
+                headerText={"Create Task"}
                 Icon={faArrowLeft}
-                Toggle={()=> props.navigation.goBack()}
+                Toggle={() => props.navigation.goBack()}
             />
 
 
 
 
-            <ScrollView style={{ width: "100%" }} contentContainerStyle={{ flexGrow: 1 }}>
+            {/* <ScrollView style={{ width: "100%" }} contentContainerStyle={{ flexGrow: 1 }}> */}
                 <View style={{ flex: 1, alignItems: "center", backgroundColor: "#16242a" }}>
-                    <Image
-                        resizeMode="contain"
-                        style={{ width: 150, height: 150, marginTop: 20 }}
-                        source={require('../../Assets/icon/job.png')} />
+                
 
                     <TextInput
                         placeholder="Enter Project Name:"
                         onChangeText={Update.bind(this, 'project_name')}
+                        style={{
+                            borderBottomWidth: 0.5,
+                            marginTop: 20,
+                            fontSize: 16,
+                            fontWeight: "bold",
+                            width: "90%",
+                            backgroundColor: "#fff",
+                            borderRadius: 10,
+                            padding: 10
+                        }}
+                    />
+
+                    <TextInput
+                        placeholder="Enter Project Description:"
+                        onChangeText={Update.bind(this, 'project_description')}
                         style={{
                             borderBottomWidth: 0.5,
                             marginTop: 20,
@@ -168,7 +214,7 @@ const CreateProject = (props) => {
                                 style={{ width: "100%", backgroundColor: "#fff", justifyContent: "center", borderRadius: 10, marginTop: 20, padding: 15, alignItems: "center" }}
                                 onPress={() => showStartDate(true)}
                             >
-                                <Text 
+                                <Text
                                     adjustsFontSizeToFit={true}
                                     numberOfLines={1}
                                 >{project.start_date === null ? "Start Date" : project.start_date.toDateString()}</Text>
@@ -196,9 +242,9 @@ const CreateProject = (props) => {
                                 style={{ width: "100%", backgroundColor: "#fff", justifyContent: "center", borderRadius: 10, marginTop: 20, padding: 15, alignItems: "center" }}
                                 onPress={() => showEndDate(true)}
                             >
-                                <Text 
-                                adjustsFontSizeToFit={true}
-                                 numberOfLines={1}
+                                <Text
+                                    adjustsFontSizeToFit={true}
+                                    numberOfLines={1}
                                 >{project.end_date === null ? "End Date" : project.end_date.toDateString()}</Text>
                             </TouchableOpacity>
                         </View>
@@ -215,17 +261,28 @@ const CreateProject = (props) => {
 
                     </View>
 
+                    <View style={{height: "30%", width:"80%"}}>
+                        <Text style={{fontSize: 16, fontWeight:"bold", color:"orange"}}>Select Employee</Text>
+                        <FlatList
+                        
+                            data={userList}
+                            renderItem={RenderItem.bind(this)}
+                            // extraData={props.ProjectList}
+                        // keyExtractor={item => item.id}
+                        />
+                    </View>
+
                     <TouchableOpacity
                         style={{ width: "80%", backgroundColor: "orange", justifyContent: "center", borderRadius: 10, marginTop: 20, padding: 15, alignItems: "center" }}
                         onPress={() => addNewProject()}
                     >
-                        <Text style={{fontSize: 16, color:"#fff", fontWeight:"bold"}}>Add Project</Text>
+                        <Text style={{ fontSize: 16, color: "#fff", fontWeight: "bold" }}>Create Task</Text>
                     </TouchableOpacity>
 
 
 
                 </View>
-            </ScrollView>
+            {/* </ScrollView> */}
 
             {startDate ? <DatePickerComponent
 
@@ -272,9 +329,8 @@ const CreateProject = (props) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        AddStaff: (info) => dispatch(addStaff(info)),
-        AddProject: (project) => dispatch(addProject(project))
+        AddTask: (task) => dispatch(addTask(task))
     }
 }
 
-export default connect(null, mapDispatchToProps)(withNavigation(CreateProject))
+export default connect(null, mapDispatchToProps)(withNavigation(CreateTasks))
