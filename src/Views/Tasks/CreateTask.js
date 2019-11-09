@@ -12,6 +12,7 @@ import { HeaderComponent } from "../../Components/indexComponent";
 import moment from 'moment'
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { projectDetails } from "../../Redux/Action/Project";
 const CreateTasks = (props) => {
     const [project, setProject] = useState({
         project_name: null,
@@ -120,6 +121,7 @@ const CreateTasks = (props) => {
 
                 
                 setUserList(response.data.data)
+              
             })
             .catch((err => {
 
@@ -135,6 +137,7 @@ const CreateTasks = (props) => {
         else if (project.project_name) {
             props.AddTask(project)
                 .then(success => {
+                    props.loadProjectDetaisl(project.project_id)
                     success ? props.navigation.goBack() : null
                 })
         }
@@ -329,7 +332,8 @@ const CreateTasks = (props) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        AddTask: (task) => dispatch(addTask(task))
+        AddTask: (task) => dispatch(addTask(task)),
+        loadProjectDetaisl: (id) => dispatch(projectDetails(id))
     }
 }
 

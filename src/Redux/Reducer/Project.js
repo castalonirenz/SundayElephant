@@ -1,8 +1,16 @@
-import { SHOW_PROJECT, LOG_OUT } from "../actionType";
+import { SHOW_PROJECT, LOG_OUT, PROJECT_DETAILS } from "../actionType";
 
 const initialState = {
     projectList: [],
+    remainingHours: null,
+    totalHours: null,
+    tasks: []
 }
+
+// type: PROJECT_DETAILS,
+//     remaining: data.remainingHours,
+//         total: data.totalHours,
+//             task: data.tasks
 
 const ProjectReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -11,6 +19,13 @@ const ProjectReducer = (state = initialState, action) => {
             return {
                 ...state,
                 projectList: action.projects,
+            }
+        case PROJECT_DETAILS:
+            return{
+                ...state,
+                tasks: action.task,
+                totalHours: action.total,
+                remainingHours: action.remaining
             }
         case LOG_OUT:
             return {

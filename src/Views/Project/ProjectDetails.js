@@ -4,39 +4,40 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCaretDown, faPlus, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { HeaderComponent } from '../../Components/indexComponent';
 import { Style } from "../../utils/Style";
-import { loadProjects } from "../../Redux/Action/Project";
+import { loadProjects, projectDetails } from "../../Redux/Action/Project";
 import { connect } from "react-redux";
 import axios from 'axios'
 const ProjectDetails = (props) => {
     const projectDetails = props.navigation.getParam('project', null)
     const [project, setProject] = useState(projectDetails)
-    const [remainingHours, setRemainingHours] = useState("")
-    const [totalHours, setTotalHours] = useState("")
-    const [tasks, setTasks] = useState([])
+    const [remainingHours, setRemainingHours] = useState(props.Project.remainingHours)
+    const [totalHours, setTotalHours] = useState(props.Project.totalHours)
+    const [tasks, setTasks] = useState(props.Project.tasks)
+
     useEffect(() => {
+        console.log(props.Project, "--> from redux store")
 
-
-        getProjectDetails()
+        getDetails()
     }, [])
 
-    const getProjectDetails = () => {
+    const getDetails = () => {
         const projectDetails = props.navigation.getParam('project', null)
+        props.getProjectDetails(projectDetails.id)
+        // axios.post('http://sunday.fitnessforlifetoday.com/api/viewProject', {
+        //     project_id: projectDetails.id
+        // })
+        //     .then((response) => {
 
-        axios.post('http://sunday.fitnessforlifetoday.com/api/viewProject', {
-            project_id: projectDetails.id
-        })
-            .then((response) => {
+        //         console.log(response)
+        //         setTasks(response.data.data.tasks)
+        //         setRemainingHours(response.data.data.remainingHours)
+        //         setTotalHours(response.data.data.totalHours)
 
-                console.log(response)
-                setTasks(response.data.data.tasks)
-                setRemainingHours(response.data.data.remainingHours)
-                setTotalHours(response.data.data.totalHours)
+        //     })
+        //     .catch((err => {
 
-            })
-            .catch((err => {
-
-                alert('Error getting project details')
-            }))
+        //         alert('Error getting project details')
+        //     }))
     }
 
     const colorIndicator = (status) => {
@@ -120,8 +121,8 @@ const ProjectDetails = (props) => {
                         <Text style={{ fontWeight: "bold", color: "orange", fontSize: 20 }}>{project.project_name}</Text>
                         <View style={{ marginTop: 20 }}>
                             <Text style={{ color: "orange", fontSize: 16 }}>{project.status}</Text>
-                            <Text style={{ color: "#fff", fontSize: 16 }}>Remaining hours: {remainingHours}</Text>
-                            <Text style={{ color: "#fff", fontSize: 16 }}>Total hours: {totalHours}</Text>
+                            <Text style={{ color: "#fff", fontSize: 16 }}>Remaining hours: {props.Project.remainingHours}</Text>
+                            <Text style={{ color: "#fff", fontSize: 16 }}>Total hours: {props.Project.totalHours}</Text>
                         </View>
                     </View>
                 </View>
@@ -168,7 +169,7 @@ const ProjectDetails = (props) => {
                     </View>
                 </View>
 
-                <Task tasksData={tasks} />
+                <Task tasksData={props.Project.tasks} />
 
             </View>
             <TouchableOpacity
@@ -191,10 +192,17 @@ const ProjectDetails = (props) => {
     )
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        loadProject: () => dispatch(loadProjects())
+const mapStateToProps = state => {
+    return{
+        Project: state.Project
     }
 }
 
-export default connect(null, mapDispatchToProps)(ProjectDetails)
+const mapDispatchToProps = dispatch => {
+    return {
+        loadProject: () => dispatch(loadProjects()),
+        getProjectDetails: (id) => dispatch(projectDetails(id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectDetails)

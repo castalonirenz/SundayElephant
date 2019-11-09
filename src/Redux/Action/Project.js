@@ -1,6 +1,6 @@
 import axios from 'axios'
 import moment from "moment";
-import { SHOW_PROJECT } from '../actionType';
+import { SHOW_PROJECT, PROJECT_DETAILS } from '../actionType';
 export const addProject = (data) => {
 
     //YYYY-MM-DD H:i
@@ -59,6 +59,33 @@ export const loadProjects = () => {
             }))
 
     
+    }
+}
+
+export const projectDetails = (id) => {
+    return dispatch => {
+        axios.post('http://sunday.fitnessforlifetoday.com/api/viewProject', {
+            project_id: id
+        })
+            .then((response) => {
+
+                console.log(response.data.data, "--> recalled")
+                dispatch(setProjectDetais(response.data.data))
+
+            })
+            .catch((err => {
+
+                alert('Error getting project details')
+            }))
+    }
+}
+
+const setProjectDetais = (data) => {
+    return{
+        type: PROJECT_DETAILS,
+        remaining: data.remainingHours,
+        total: data.totalHours,
+        task: data.tasks
     }
 }
 
