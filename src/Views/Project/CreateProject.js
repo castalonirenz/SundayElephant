@@ -118,6 +118,7 @@ const CreateProject = (props) => {
     return (
         <SafeAreaView style={{ flex: 1, width: "100%" }}>
             <HeaderComponent
+                headerText={"Create Project"}
                 Icon={faArrowLeft}
                 Toggle={()=> props.navigation.goBack()}
             />

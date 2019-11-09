@@ -26,7 +26,7 @@ export const Header = (props) => {
                 fontSize: 18,
                 marginLeft: 30
             }}>
-                Sunday Elephant
+                {props.headerText}
             </Text>
         </View>
     )

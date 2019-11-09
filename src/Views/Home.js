@@ -40,6 +40,7 @@ const Home = (props) => {
   return (
     <SafeAreaView style={{ flex: 1, width: "100%", backgroundColor: "#16242a" }}>
       <HeaderComponent
+        headerText={"Sunday Elephant"}
         Icon={faBars}
         Toggle={() => props.navigation.dispatch(DrawerActions.toggleDrawer())}
       />

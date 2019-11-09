@@ -48,6 +48,7 @@ const Employee = (props) => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor:"#16242a"}}>
             <HeaderComponent
+                headerText={"Employees"}
                 Icon={faBars}
                 Toggle={() => props.navigation.dispatch(DrawerActions.toggleDrawer())}
             />

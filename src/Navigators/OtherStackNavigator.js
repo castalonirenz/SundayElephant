@@ -4,6 +4,7 @@ import EmployeeScreen from '../Views/Employee/Employee'
 import CreateEmployeeScreen from '../Views/Employee/CreateEmployee'
 import ProjectScreen from "../Views/Project/Project";
 import CreateProjectScreen from "../Views/Project/CreateProject";
+import ProjectDetailScreen from "../Views/Project/ProjectDetails";
 const EmployeeNav = createStackNavigator({
     Employee: {
         screen: EmployeeScreen
@@ -25,6 +26,9 @@ const ProjectNav = createStackNavigator({
     },
     AddProject: {
         screen: CreateProjectScreen
+    },
+    ProjectDetails:{
+        screen: ProjectDetailScreen
     }
 }, {
     defaultNavigationOptions: {

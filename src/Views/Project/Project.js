@@ -12,16 +12,23 @@ const Project = (props) => {
     const [showAddEmployee, setShowAddEmployee] = useState(false)
     const [refreshing, setRefreshing] = useState(false)
     useEffect(() => {
-
+        console.log('am i called again')
         props.loadProject()
 
     }, [])
 
+    const ProjectDetails = (project) => {
+        props.navigation.navigate('ProjectDetails',{
+            project: project
+        })
+    }
+
 
     const RenderItem = ({ item }) => {
-        console.log(item, "project details")
         return (
-            <TouchableOpacity style={{ padding: 10, flexDirection: "row", alignItems: "center" }}>
+            <TouchableOpacity
+                    onPress={ProjectDetails.bind(this, item)} 
+                    style={{ padding: 10, flexDirection: "row", alignItems: "center" }}>
                 <Image
                     resizeMode="contain"
                     style={{ width: 100, height: 100, borderRadius: 50, borderColor: "orange" }}
@@ -47,6 +54,7 @@ const Project = (props) => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor:"#16242a"}}>
             <HeaderComponent
+                headerText={"Projects"}
                 Icon={faBars}
                 Toggle={() => props.navigation.dispatch(DrawerActions.toggleDrawer())}
             />

@@ -43,6 +43,7 @@ const CreateEmployee = (props) => {
     return (
         <SafeAreaView style={{ flex: 1, width: "100%" }}>
             <HeaderComponent
+                headerText={"Add Employee"}
                 Icon={faArrowLeft}
                 Toggle={() => props.navigation.goBack()}
             />
