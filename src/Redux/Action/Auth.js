@@ -10,14 +10,17 @@ export const Login =(credentials) => {
             .then((response) => {
                 
                 if (!response.data.error) {
-                    
+                    console.log(response.data.data.role_id)
                     dispatch(SET_CREDENTIALS(response.data.data))
-                    alert('log in success')
+          
                     
-                   return true
+                   return {
+                       success: true,
+                       role_id: response.data.data.role_id
+                   }
                 }
                 else {
-                   
+                   alert('log in failed')
                     return false
                 }
             })

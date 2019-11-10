@@ -115,7 +115,7 @@ const CreateTasks = (props) => {
     }
 
     useEffect(() => {
-        console.log(project, "--> task details")
+        
         axios.post('http://sunday.fitnessforlifetoday.com/api/showTask')
             .then((response) => {
 
@@ -150,13 +150,13 @@ const CreateTasks = (props) => {
         return (
             <TouchableOpacity
                 onPress={() => Update("user_id",item.id)}
-                style={{ padding: 10, flexDirection: "row", alignItems: "center", borderRadius: 10,borderWidth: item.id === project.user_id ? 5 : 0, borderColor: item.id === project.user_id ? "orange" : null  }}>
+                style={{ padding: 10,  alignItems: "center", borderRadius: 10,borderWidth: item.id === project.user_id ? 5 : 0, borderColor: item.id === project.user_id ? "orange" : null  }}>
                 <Image
                     resizeMode="contain"
                     style={{ width: 100, height: 100, borderRadius: 50, borderColor: "orange" }}
                     source={require('../../Assets/icon/avatar.png')}
                 />
-                <Text style={{ fontSize: 24, fontWeight: "bold", marginLeft: 20, color: "green" }}>
+                <Text style={{ fontSize: 24, fontWeight: "bold",  color: "green" }}>
                     {item.full_name}
          
                 </Text>
@@ -174,7 +174,7 @@ const CreateTasks = (props) => {
 
 
 
-            {/* <ScrollView style={{ width: "100%" }} contentContainerStyle={{ flexGrow: 1 }}> */}
+            <ScrollView style={{ width: "100%" }} contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={{ flex: 1, alignItems: "center", backgroundColor: "#16242a" }}>
                 
 
@@ -267,7 +267,7 @@ const CreateTasks = (props) => {
                     <View style={{height: "30%", width:"80%"}}>
                         <Text style={{fontSize: 16, fontWeight:"bold", color:"orange"}}>Select Employee</Text>
                         <FlatList
-                        
+                            horizontal={true}
                             data={userList}
                             renderItem={RenderItem.bind(this)}
                             // extraData={props.ProjectList}
@@ -285,7 +285,7 @@ const CreateTasks = (props) => {
 
 
                 </View>
-            {/* </ScrollView> */}
+         
 
             {startDate ? <DatePickerComponent
 
@@ -326,6 +326,7 @@ const CreateTasks = (props) => {
                 onChange={Update.bind(this, "end_time")}
             />
                 : null}
+            </ScrollView>
         </SafeAreaView>
     )
 }

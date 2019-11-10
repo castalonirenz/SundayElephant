@@ -8,22 +8,43 @@ import { faCaretDown, faPlus, faBars } from "@fortawesome/free-solid-svg-icons";
 import { Style } from "../../utils/Style";
 import { connect } from "react-redux";
 import { showEmployee } from "../../Redux/Action/Employee";
+import axios from 'axios';
 const Employee = (props) => {
     const [refreshing, setRefreshing] = useState(false)
-    const [employeeList, setEmployeeList] = useState([])
+    const [employeeData, setEmployeeData] = useState({})
     const [showEmployee, setShowEmployee] = useState(false)
 
     useEffect(() => {
         
         props.loadEmployee()
-
+        
     }, [])
 
-    const RenderItem = ({ item }) => {
+
+    const selectedEmployee = (val) => {
         
+        
+
+        // employeeStatistics
+        axios.post('http://sunday.fitnessforlifetoday.com/api/employeeStatistics', {
+            user_id: val.id
+        })
+            .then((response) => {
+                
+                setEmployeeData(response.data.data)
+                setShowEmployee(true)
+            })
+            .catch((err => {
+
+                alert('error getting employee details')
+            }))
+    }
+
+
+    const RenderItem = ({ item }) => {
         return (
             <TouchableOpacity 
-                onPress={()=> setShowEmployee(true)}
+                onPress={()=>selectedEmployee(item)}
                 style={{ padding: 10, flexDirection: "row", alignItems: "center" }}>
                 <Image
                     resizeMode="contain"
@@ -71,7 +92,12 @@ const Employee = (props) => {
             <EmployeeModal
                 Visible={showEmployee}
                 // Visible={task}
-               
+                projects={employeeData.projects !== undefined ? employeeData.projects : []}
+                employeeName={employeeData.user !== undefined ? employeeData.user.full_name : "" }
+                email={employeeData.user !== undefined ? employeeData.user.email: "" }
+                phone={employeeData.user !== undefined ? employeeData.user.phone_no : ""}
+                address={employeeData.user !== undefined ? employeeData.user.address : ""}
+                data={employeeData.status}
                 closeModal={() => setShowEmployee(false)}
                 ononRequestClose={() => setShowEmployee(false)}
                 renderItem={taskItem.bind(this)}

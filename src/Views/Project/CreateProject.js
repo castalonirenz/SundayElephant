@@ -3,8 +3,7 @@ import { TextInput, Text, TouchableOpacity, SafeAreaView, Image, Picker, View, S
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
 import { ModalComponent, DatePickerComponent } from "../../Components/indexComponent";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { loadProjects } from "../../Redux/Action/Project";
 import { addStaff } from "../../Redux/Action/Staff";
 import { DatePicker } from 'native-base';
 import { addProject } from "../../Redux/Action/Project";
@@ -29,24 +28,24 @@ const CreateProject = (props) => {
     const [endTime, showEndTime] = useState(false)
 
     const Update = (property, action, date) => {
-        console.log(property, "--> property")
-        console.log(action, "-->action")
-        console.log(date, "---> data")
+        
+        
+        
         date === undefined ? showStartDate(false) : null
         date === undefined ? showStartTime(false) : null
 
         date === undefined ? showEndDate(false) : null
         date === undefined ? showEndTime(false) : null
         if (property === "project_name") {
-            console.log('here')
+            
             let tempObj = project
             tempObj[property] = action
             setProject(prevCredentials => ({ ...prevCredentials, ...tempObj }))
         }
         if (action.type === "set" || Platform.OS === "ios") {
-            console.log('set')
+            
             if (property === "start_date") {
-                console.log(moment(date).isAfter(project.end_date))
+                
                 if (moment(date).isAfter(project.end_date)) {
                     alert('Start date must not overlap end date')
                     showStartDate(false)
@@ -73,7 +72,7 @@ const CreateProject = (props) => {
                     showEndTime(false)
                 }
                 else {
-                    console.log('set to false dapat')
+                    
                     let tempObj = project
                     tempObj[property] = date
                     showStartDate(false)
@@ -99,17 +98,11 @@ const CreateProject = (props) => {
             showStartTime(false)
             showEndTime(false)
         }
-        // if(Platform.OS === "ios"){
-        //     showStartDate(false)
-        //     showEndDate(false)
-        //     showStartTime(false)
-        //     showEndTime(false)
-        // }
 
     }
 
     useEffect(() => {
-        console.log(project, "effects")
+        
     },[])
 
 
@@ -120,6 +113,7 @@ const CreateProject = (props) => {
         else if(project.project_name){
             props.AddProject(project)
             .then(success => {
+                props.loadProject()
                 success ? props.navigation.goBack() : null
             })
         }
@@ -273,7 +267,8 @@ const CreateProject = (props) => {
 const mapDispatchToProps = dispatch => {
     return {
         AddStaff: (info) => dispatch(addStaff(info)),
-        AddProject: (project) => dispatch(addProject(project))
+        AddProject: (project) => dispatch(addProject(project)),
+        loadProject: () => dispatch(loadProjects())
     }
 }
 

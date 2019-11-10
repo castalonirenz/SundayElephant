@@ -21,7 +21,7 @@ export const addTask = (data) => {
 	        end_date: endDate
         })
             .then((response) => {
-                console.log(response)
+                
                 return true
 
             })

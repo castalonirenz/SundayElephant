@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, ScrollView, ImageBackground, PixelRatio, Button, Image, TextInput } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, ImageBackground, PixelRatio, Button, Image, TextInput, ActivityIndicator } from 'react-native';
 import { ThemeResponsive } from "../Themes/Theme";
 import { Title, DrawerLabel } from "../Themes/StyledComponent";
 import { connect } from "react-redux";
@@ -12,8 +12,9 @@ const Pixel = PixelRatio.get()
   constructor(props) {
     super(props);
     this.state = {
-      username: 'admin',
-      password:'secret'
+      // username: 'admin',
+      // password:'secret',
+      disabled: false,
     };
   }
 
@@ -24,10 +25,18 @@ const Pixel = PixelRatio.get()
     this.state.password === undefined ? this.setState({password: '' }) : null
 
     if(this.state.password !== "" || this.state.username !== "" || this.state.username !== undefined || this.state.password !== undefined){
+      this.setState({disabled: true})
       this.props.Auth(this.state)
-      .then(success => {
+      .then(response => {
         // alert(success)
-        success ? this.props.navigation.navigate('Drawer') : alert('Log in failed')
+        // success ? this.props.navigation.navigate('Drawer') : alert('Log in failed')
+        if(response.success){
+          response.role_id === "1" ? this.props.navigation.navigate('Drawer') : this.props.navigation.navigate('NormalUser')
+          this.setState({ disabled: false })
+        }
+        else{
+          this.setState({disabled: false})
+        }
       })
     }
   }
@@ -87,11 +96,14 @@ const Pixel = PixelRatio.get()
 
          <View style={{alignSelf:"flex-end", marginTop: 50, marginRight: 30}}>
               <TouchableOpacity 
+                    disabled={this.state.disabled}
                     onPress={this.Login}
                     style={{backgroundColor:"#c5c5c5", padding: 15, borderRadius: 5}}>
                 <Text style={{fontWeight:"bold"}}>LOGIN</Text>
               </TouchableOpacity>
          </View>
+
+          {this.state.disabled ? <ActivityIndicator size="large" color="orange" /> : null}
      </View>
  
 {/* 

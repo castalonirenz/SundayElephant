@@ -9,7 +9,7 @@ import { faHome, faCog, faTasks, faUsers, faSignOutAlt, faFileInvoiceDollar, faF
 import { ThemeResponsive } from "../Themes/Theme";
 import HomeScreen from "../Views/Home";
 import EmployeeScreen from '../Views/Employee/Employee'
-import { EmployeeNavContainer, ProjectNavContainer, ProfileNavContainer, HomeNavContainer } from "./OtherStackNavigator";
+import { EmployeeNavContainer, ProjectNavContainer, ProfileNavContainer, HomeNavContainer, EmployeeTaskContainer } from "./OtherStackNavigator";
 import { renderLabel } from "../Components/DrawerLabel";
 import Bill from '../Views/Bill';
 import { connect } from "react-redux";
@@ -23,7 +23,6 @@ const CustomDrawer = (props) => {
 
 
     const logOut = () => {
-        console.log('im here')
        return(
            Alert.alert(
                'Logout',
@@ -139,3 +138,37 @@ const Drawer = createDrawerNavigator({
 })
 
 export const DrawerContainer = createAppContainer(Drawer)
+
+
+const Employee = createDrawerNavigator({
+    Home: {
+        screen: HomeNavContainer,
+        navigationOptions: {
+            drawerIcon: ({ tintColor }) =>
+                <FontAwesomeIcon icon={faHome} color={tintColor} size={25} />
+        }
+    },
+    "My Account": {
+        screen: ProfileNavContainer,
+        navigationOptions: {
+            drawerIcon: ({ tintColor }) =>
+                <FontAwesomeIcon icon={faUser} color={tintColor} size={25} />
+        }
+    },
+    Tasks: {
+        screen: EmployeeTaskContainer,
+        navigationOptions: {
+            drawerIcon: ({ tintColor }) =>
+                <FontAwesomeIcon icon={faTasks} color={tintColor} size={25} />
+        }
+    },
+}, {
+    contentComponent: connect(mapStateToProps, dispatchToProps)(withNavigation(CustomDrawer)),
+    drawerType: "slide",
+    contentOptions: {
+        activeTintColor: "orange",
+        inactiveTintColor: "#fff"
+    }
+})
+
+export const EmployeeContainer = createAppContainer(Employee)

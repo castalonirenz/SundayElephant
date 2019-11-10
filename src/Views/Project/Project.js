@@ -12,7 +12,7 @@ const Project = (props) => {
     const [showAddEmployee, setShowAddEmployee] = useState(false)
     const [refreshing, setRefreshing] = useState(false)
     useEffect(() => {
-        console.log('am i called again')
+        
         props.loadProject()
 
     }, [])

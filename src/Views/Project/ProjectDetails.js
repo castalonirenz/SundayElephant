@@ -17,7 +17,7 @@ const ProjectDetails = (props) => {
     const [taskDetails, setTaskDetails] = useState({})
     const [showTasks, setShowTasks] = useState(false)
     useEffect(() => {
-        console.log(props.Project, "--> from redux store")
+        
 
         getDetails()
     }, [])
@@ -36,7 +36,7 @@ const ProjectDetails = (props) => {
             return "green"
         }
         else if (status === "incoming") {
-            return "transparent"
+            return "#fff"
         }
         else if (status === "incomplete") {
             return "red"
@@ -55,7 +55,7 @@ const ProjectDetails = (props) => {
             task_id: item.id
         })
             .then((response) => {
-                console.log(response.data.data, '--> viewing task')
+                
                 setTaskDetails(response.data.data)
 
             })
@@ -112,19 +112,19 @@ const ProjectDetails = (props) => {
     }
 
     const updateTaskStatus = () => {
-        console.log(taskDetails.task_id, "task id")
+        
         axios.post('http://sunday.fitnessforlifetoday.com/api/updateTaskStatus', {
             task_id: taskDetails.id,
             status: "done"
         })
             .then((response) => {
-                console.log(response.data.data)
+                
 
                 props.getProjectDetails(projectDetails.id)
                 setShowTasks(false)
             })
             .catch((err => {
-                console.log(err)
+                
                 alert('Error updating task details')
             }))
     }
@@ -188,21 +188,21 @@ const ProjectDetails = (props) => {
                         <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
                             <View>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <View style={{ borderColor: "#fff", height: 10, width: 10, borderWidth: 1, borderRadius: 5, marginRight: 5 }} />
+                                    <View style={{ borderColor: "#fff", height: 10, width: 10, borderWidth: 1, borderRadius: 5, marginRight: 5, backgroundColor:"#fff" }} />
                                     <Text style={{ fontSize: 16, color: "orange" }}>Incoming</Text>
                                 </View>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <View style={{ backgroundColor: "#4287f5", height: 10, width: 10, borderWidth: 1, borderRadius: 5, marginRight: 5 }} />
+                                    <View style={{ backgroundColor: "#4287f5", height: 10, width: 10,  borderRadius: 5, marginRight: 5 }} />
                                     <Text style={{ fontSize: 16, color: "orange" }}>Ongoing</Text>
                                 </View>
                             </View>
                             <View>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <View style={{ backgroundColor: "green", height: 10, width: 10, borderWidth: 1, borderRadius: 5, marginRight: 5 }} />
+                                    <View style={{ backgroundColor: "green", height: 10, width: 10,  borderRadius: 5, marginRight: 5 }} />
                                     <Text style={{ fontSize: 16, color: "orange" }}>Done</Text>
                                 </View>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <View style={{ backgroundColor: "red", height: 10, width: 10, borderWidth: 1, borderRadius: 5, marginRight: 5 }} />
+                                    <View style={{ backgroundColor: "red", height: 10, width: 10, borderRadius: 5, marginRight: 5 }} />
                                     <Text style={{ fontSize: 16, color: "orange" }}>Incomplete</Text>
                                 </View>
                             </View>

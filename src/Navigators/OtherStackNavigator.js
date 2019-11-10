@@ -8,6 +8,7 @@ import ProjectDetailScreen from "../Views/Project/ProjectDetails";
 import CreateTasksScreen from '../Views/Tasks/CreateTask'
 import ProfileScreen from '../Views/Profile/userProfile'
 import HomeScreen from '../Views/Home'
+import TaskScreen from "../Views/Tasks/EmployeeTask";
 
 const HomeNav = createStackNavigator({
     Home: {
@@ -73,4 +74,16 @@ const ProfileNav = createStackNavigator({
 })
 
 export const ProfileNavContainer = createAppContainer(ProfileNav)
+
+const EmployeeTaskNav = createStackNavigator({
+    Task: {
+        screen: TaskScreen
+    },
+}, {
+    defaultNavigationOptions: {
+        header: null
+    }
+})
+
+export const EmployeeTaskContainer = createAppContainer(EmployeeTaskNav)
 

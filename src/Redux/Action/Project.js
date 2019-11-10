@@ -19,7 +19,7 @@ export const addProject = (data) => {
             end_date: endDate
         })
             .then((response) => {
-                console.log(response)
+                
                 if(response.data.error_msg === null){
                     
                     return true
@@ -41,7 +41,7 @@ export const loadProjects = () => {
     return dispatch => {
        return axios.post('http://sunday.fitnessforlifetoday.com/api/projectList')
             .then((response) => {
-                console.log(response)
+                
                 if (response.data.error_msg === null) {
                     // return true
                     dispatch(setProject(response.data.data))
@@ -70,7 +70,7 @@ export const projectDetails = (id) => {
         })
             .then((response) => {
 
-                console.log(response.data.data, "--> recalled")
+                
                 dispatch(setProjectDetais(response.data.data))
 
             })

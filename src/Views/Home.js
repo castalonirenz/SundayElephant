@@ -17,7 +17,7 @@ const Home = (props) => {
   )
   const [project, setProject] = useState([])
   const Selected = (day) => {
-    console.log(day, "date selected")
+    
     let month = day.month
     let araw = moment(day.dateString).format('DD')
     let year = day.year
@@ -29,10 +29,10 @@ const Home = (props) => {
     })
       .then((response) => {
 
-        console.log(response.data)
+        
         setProject(response.data.data.projectList)
         let complete = {[year+"-"+month+"-"+araw]:{selected: true}}
-        console.log(complete, "complete")
+        
         setMarkedDates(complete)
       })
       .catch((err => {
@@ -66,6 +66,7 @@ const Home = (props) => {
   const RenderItem = ({ item }) => {
     return (
       <TouchableOpacity
+        disabled={props.Credentials.role_id === "2" ? true: false}
         onPress={() => ProjectDetails(item)}
         style={{ padding: 10, flexDirection: "row", alignItems: "center" }}>
         <Image
