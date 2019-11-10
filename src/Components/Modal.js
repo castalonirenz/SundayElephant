@@ -152,13 +152,22 @@ export const EmployeeDetails = (props) => {
 
     const pieData = props.data !== undefined ? props.data : []
     let finalData = []
+    let total = 0
     if (pieData.length !== 0) {
+        console.log(pieData, "--> pie data")
+      pieData.reduce((a, b) =>{
+          total = parseInt(a.total)+parseInt(b.total)
+        })
+        console.log(total, "--> same")
+
         pieData.map((items, index) => {
             
             finalData.push(
                 {
                     amount: items.total,
                     key: index,
+                    status: items.status,
+                    percent: items.total / total * 100,
                     svg: {
                         fill: assignColor(items.status)
                     }
@@ -172,19 +181,50 @@ export const EmployeeDetails = (props) => {
         return slices.map((slice, index) => {
             const { labelCentroid, pieCentroid, data } = slice;
             return (
-                <TextSvg
-                    key={index}
-                    x={pieCentroid[0]}
-                    y={pieCentroid[1]}
-                    fill={'white'}
-                    textAnchor={'middle'}
-                    alignmentBaseline={'middle'}
-                    fontSize={24}
-                    stroke={'black'}
-                    strokeWidth={0.2}
-                >
-                    {data.amount}
-                </TextSvg>
+             <View>
+                    {/* <TextSvg
+                        key={index}
+                        x={pieCentroid[0]}
+                        y={pieCentroid[2]}
+                        fill={'white'}
+                        textAnchor={'middle'}
+                        alignmentBaseline={'middle'}
+                        fontSize={16}
+                        stroke={'black'}
+                        strokeWidth={0.2}
+                    >
+                        {data.amount}
+
+                    </TextSvg> */}
+                    <TextSvg
+                        key={index}
+                        x={pieCentroid[0]}
+                        y={pieCentroid[1]}
+                        fill={'white'}
+                        textAnchor={'middle'}
+                        alignmentBaseline={'middle'}
+                        fontSize={16}
+                        stroke={'black'}
+                        strokeWidth={0.2}
+                    >
+                        {data.status}
+
+                    </TextSvg>
+                    <TextSvg
+                        key={index}
+                        x={pieCentroid[0]}
+                        y={pieCentroid[2]}
+                        fill={'orange'}
+                        textAnchor={'middle'}
+                        alignmentBaseline={'middle'}
+                        fontSize={24}
+                        stroke={'black'}
+                        strokeWidth={0.2}
+                    >
+                        {Math.round(data.percent)}%
+
+                    </TextSvg>
+             </View>
             )
         })
     }
@@ -201,7 +241,7 @@ export const EmployeeDetails = (props) => {
 
 
 
-                    <View style={{ backgroundColor: "#16242a", padding: 0, width: "80%", borderRadius: 10, alignItems: "center", height: "80%", justifyContent: "center" }}>
+                    <View style={[Style.Shadow, { backgroundColor: "#423e3e", padding: 0, width: "80%", borderRadius: 10, alignItems: "center", height: "80%", justifyContent: "center" }]}>
                         <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{ width: "100%" }}>
                             <TouchableOpacity
                                 onPress={props.closeModal}
@@ -231,7 +271,7 @@ export const EmployeeDetails = (props) => {
                                 </View>
 
                                 <Text style={{ color: "orange", marginTop: 20 }}>Task Summary:</Text>
-                                <View style={{ flexDirection: "row", alignSelf: "center", marginTop: 20 }}>
+                                <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 20, width:"100%" }}>
                                     <PieChart
                                         // outerRadius={'95%'}
                                         valueAccessor={({ item }) => item.amount}
@@ -250,15 +290,18 @@ export const EmployeeDetails = (props) => {
                                         let task = items.task_list
                                         return(
                                             <View style={{marginTop: 20, width:"100%"}}>
-                                                <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-evenly"}}>
-                                                    <View style={{width: 20, height: 20, borderRadius: 10, backgroundColor: assignColor(items.status)}}/>
-                                                    <Text style={{ color: "orange", fontSize: 14, fontWeight: "bold" }}>{items.project_name}</Text>
+                                                <View style={{flexDirection:"row", alignItems:"center"}}>
+                                                   
+                                                    <Text style={{ color: "orange", fontSize: 18, fontWeight: "bold" }}>{items.project_name}</Text>
                                                 </View>
                                                 
                                                 {task.map((task, key) => {
                                                     return(
                                                         <View style={{marginTop: 20, marginLeft: 30}}>
-                                                            <Text style={{ color: "orange", fontSize: 14, fontWeight: "bold" }}>{task.task_name}</Text>
+                                                            <View style={{flexDirection:"row"}}>
+                                                                <View style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: assignColor(task.status) }} />
+                                                                <Text style={{ color: "orange", fontSize: 14, fontWeight: "bold" }}>{task.task_name}</Text>
+                                                            </View>
                                                             <Text style={{ color: "#fff", fontSize: 14, marginTop: 5 }}>{task.task_description}</Text>
                                                         </View>
                                                     )
