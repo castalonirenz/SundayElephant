@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { SafeAreaView, View, Text, TouchableOpacity, TextInput, FlatList, Image, RefreshControl } from "react-native";
-import { HeaderComponent } from '../../Components/indexComponent';
+import { HeaderComponent, EmployeeModal } from '../../Components/indexComponent';
 import { withNavigation } from "react-navigation";
 import { DrawerActions } from 'react-navigation-drawer';
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -11,7 +11,7 @@ import { showEmployee } from "../../Redux/Action/Employee";
 const Employee = (props) => {
     const [refreshing, setRefreshing] = useState(false)
     const [employeeList, setEmployeeList] = useState([])
-
+    const [showEmployee, setShowEmployee] = useState(false)
 
     useEffect(() => {
         
@@ -22,7 +22,9 @@ const Employee = (props) => {
     const RenderItem = ({ item }) => {
         
         return (
-            <View style={{ padding: 10, flexDirection: "row", alignItems: "center" }}>
+            <TouchableOpacity 
+                onPress={()=> setShowEmployee(true)}
+                style={{ padding: 10, flexDirection: "row", alignItems: "center" }}>
                 <Image
                     resizeMode="contain"
                     style={{ width: 100, height: 100, borderRadius: 50,  borderColor:"orange" }}
@@ -31,7 +33,25 @@ const Employee = (props) => {
                 <Text style={{fontSize: 24, fontWeight:"bold", marginLeft: 20, color:"green"}}>
                     {item.full_name}
                 </Text>
-            </View>
+            </TouchableOpacity>
+        )
+    }
+
+    const taskItem = ({ item }) => {
+
+        return (
+            <TouchableOpacity
+                onPress={() => setShowEmployee(true)}
+                style={{ padding: 10, flexDirection: "row", alignItems: "center" }}>
+                <Image
+                    resizeMode="contain"
+                    style={{ width: 100, height: 100, borderRadius: 50, borderColor: "orange" }}
+                    source={require('../../Assets/icon/avatar.png')}
+                />
+                <Text style={{ fontSize: 24, fontWeight: "bold", marginLeft: 20, color: "green" }}>
+                    {item.full_name}
+                </Text>
+            </TouchableOpacity>
         )
     }
 
@@ -47,6 +67,18 @@ const Employee = (props) => {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor:"#16242a"}}>
+
+            <EmployeeModal
+                Visible={showEmployee}
+                // Visible={task}
+               
+                closeModal={() => setShowEmployee(false)}
+                ononRequestClose={() => setShowEmployee(false)}
+                renderItem={taskItem.bind(this)}
+                // data={}
+                // complete={() => updateTaskStatus()}
+            />
+
             <HeaderComponent
                 headerText={"Employees"}
                 Icon={faBars}
