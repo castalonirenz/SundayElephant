@@ -21,6 +21,7 @@ export const addProject = (data) => {
             .then((response) => {
                 console.log(response)
                 if(response.data.error_msg === null){
+                    
                     return true
                 }
                 else{
