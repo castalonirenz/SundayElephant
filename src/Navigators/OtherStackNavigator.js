@@ -7,6 +7,26 @@ import CreateProjectScreen from "../Views/Project/CreateProject";
 import ProjectDetailScreen from "../Views/Project/ProjectDetails";
 import CreateTasksScreen from '../Views/Tasks/CreateTask'
 import ProfileScreen from '../Views/Profile/userProfile'
+import HomeScreen from '../Views/Home'
+
+const HomeNav = createStackNavigator({
+    Home: {
+        screen: HomeScreen
+    },
+    ProjectDetails: {
+        screen: ProjectDetailScreen
+    },
+    CreateTask: {
+        screen: CreateTasksScreen
+    }
+}, {
+    defaultNavigationOptions: {
+        header: null
+    }
+})
+
+export const HomeNavContainer = createAppContainer(HomeNav)
+
 const EmployeeNav = createStackNavigator({
     Employee: {
         screen: EmployeeScreen

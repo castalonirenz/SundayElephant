@@ -44,7 +44,7 @@ export const Calendars = (props) => {
             theme={{
                 calendarBackground:"#16242a",
                 textDisabledColor:"gray",
-                todayTextColor:"green", 
+                todayTextColor:"orange", 
                 dotColor:"orange",
                 dayTextColor:"#fff",
                 monthTextColor:"#fff",

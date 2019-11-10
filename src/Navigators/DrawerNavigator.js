@@ -9,7 +9,7 @@ import { faHome, faCog, faTasks, faUsers, faSignOutAlt, faFileInvoiceDollar, faF
 import { ThemeResponsive } from "../Themes/Theme";
 import HomeScreen from "../Views/Home";
 import EmployeeScreen from '../Views/Employee/Employee'
-import { EmployeeNavContainer, ProjectNavContainer, ProfileNavContainer } from "./OtherStackNavigator";
+import { EmployeeNavContainer, ProjectNavContainer, ProfileNavContainer, HomeNavContainer } from "./OtherStackNavigator";
 import { renderLabel } from "../Components/DrawerLabel";
 import Bill from '../Views/Bill';
 import { connect } from "react-redux";
@@ -94,7 +94,7 @@ const dispatchToProps = dispatch => {
 
 const Drawer = createDrawerNavigator({
     Home: {
-        screen: HomeScreen,
+        screen: HomeNavContainer,
         navigationOptions: {
             drawerIcon: ({ tintColor }) =>
                 <FontAwesomeIcon icon={faHome} color={tintColor} size={25} />
