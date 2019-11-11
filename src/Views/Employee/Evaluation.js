@@ -194,7 +194,7 @@ const TextChange = (val) => {
     setJobPerformance(val)
 }
 const submit = () => {
-    console.log('here?')
+    console.log(grit,'here?')
     axios.post('http://sunday.fitnessforlifetoday.com/api/saveEvaluation', {
         content:[
             {
@@ -202,14 +202,14 @@ const submit = () => {
                 employee_name: employeeDetails.full_name,
                 date_of_evaluation: moment().format('YYYY-DD-MM HH:mm'),
                 soft_skills:{
-                    grit: grit.text,
-                    ownership: ownership.text,
-                    genuine_concern: genuine.text,
-                    mindfullness: mindfullness.text,
-                    curiosity: curiosity.text,
-                    communication: comunnication.text,
-                    personal_branding: personalBranding.text,
-                    creativity_and_skill_set: creativity.text
+                    grit: grit,
+                    ownership: ownership,
+                    genuine_concern: genuine,
+                    mindfullness: mindfullness,
+                    curiosity: curiosity,
+                    communication: comunnication,
+                    personal_branding: personalBranding,
+                    creativity_and_skill_set: creativity
                 },
                    job_performance: jobPerformance
             }
@@ -217,7 +217,10 @@ const submit = () => {
     })
         .then((response) => {
 
-          console.log(response)
+          console.log(response.data)
+          if(response.data.error_msg === null){
+              props.navigation.goBack()
+          }
         })
         .catch((err => {
             console.log(err, "--> error submitting")

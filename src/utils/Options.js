@@ -90,7 +90,7 @@ export const SoftSkills = [
         rate: [
             {
                 key: 'mindfullness_outstanding',
-                text: "genuine_Outstanding"
+                text: "Outstanding"
             },
             {
                 key: 'mindfullness_exceeds_expectations',
