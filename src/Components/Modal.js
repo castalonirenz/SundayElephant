@@ -81,7 +81,7 @@ export const TaskDetails = (props) => {
 
 
 
-                    <View style={{ backgroundColor: "#16242a", padding: 0, width: "80%", borderRadius: 10, alignItems: "center", height: "60%", justifyContent: "center" }}>
+                    <View style={[Style.Shadow, { backgroundColor: "#423e3e", padding: 0, width: "80%", borderRadius: 10, alignItems: "center", height: "60%", justifyContent: "center" }]}>
                         <TouchableOpacity
                             onPress={props.closeModal}
                             style={{ position: "absolute", top: 20, right: 20 }}>

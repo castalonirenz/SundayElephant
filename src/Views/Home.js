@@ -99,9 +99,10 @@ const Home = (props) => {
         DayPress={Selected.bind(this)}
       />
 
-      <View style={{padding: 20}}>
+      <View style={{padding: 20, flex: 1}}>
         <Text style={{color:"orange", fontSize:18, fontWeight:"bold"}}>Projects created this day:</Text>
         <FlatList
+          scrollEnabled={true}
           data={project}
           renderItem={RenderItem.bind(this)}
           extraData={project}/>

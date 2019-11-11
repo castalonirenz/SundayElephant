@@ -4,11 +4,12 @@ import { HeaderComponent, EmployeeModal } from '../../Components/indexComponent'
 import { withNavigation } from "react-navigation";
 import { DrawerActions } from 'react-navigation-drawer';
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faCaretDown, faPlus, faBars } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faPlus, faBars, faStar } from "@fortawesome/free-solid-svg-icons";
 import { Style } from "../../utils/Style";
 import { connect } from "react-redux";
 import { showEmployee } from "../../Redux/Action/Employee";
 import axios from 'axios';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 const Employee = (props) => {
     const [refreshing, setRefreshing] = useState(false)
     const [employeeData, setEmployeeData] = useState({})
@@ -40,21 +41,36 @@ const Employee = (props) => {
             }))
     }
 
+    const evaluateEmployee = (data) => {
+        props.navigation.navigate('Evaluate', {
+            employee: data
+        })
+    }
+
 
     const RenderItem = ({ item }) => {
         return (
-            <TouchableOpacity 
-                onPress={()=>selectedEmployee(item)}
-                style={{ padding: 10, flexDirection: "row", alignItems: "center" }}>
-                <Image
-                    resizeMode="contain"
-                    style={{ width: 100, height: 100, borderRadius: 50,  borderColor:"orange" }}
-                    source={require('../../Assets/icon/avatar.png')}
-                />
-                <Text style={{fontSize: 24, fontWeight:"bold", marginLeft: 20, color:"green"}}>
-                    {item.full_name}
-                </Text>
-            </TouchableOpacity>
+          <View
+                style={{ padding: 10, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+            >
+                <TouchableOpacity
+                    onPress={() => selectedEmployee(item)}
+                    style={{ padding: 10, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+                   >
+                    <Image
+                        resizeMode="contain"
+                        style={{ width: 100, height: 100, borderRadius: 50, borderColor: "orange" }}
+                        source={require('../../Assets/icon/avatar.png')}
+                    />
+                    <Text style={{ fontSize: 24, fontWeight: "bold", marginLeft: 20, color: "green" }}>
+                        {item.full_name}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=> evaluateEmployee(item)}>
+                    <FontAwesomeIcon icon={faStar} size={40} color="orange" />
+                </TouchableOpacity>
+          </View>
+            
         )
     }
 
@@ -72,6 +88,8 @@ const Employee = (props) => {
                 <Text style={{ fontSize: 24, fontWeight: "bold", marginLeft: 20, color: "green" }}>
                     {item.full_name}
                 </Text>
+
+        
             </TouchableOpacity>
         )
     }
