@@ -98,3 +98,21 @@ const EmployeeTaskNav = createStackNavigator({
 
 export const EmployeeTaskContainer = createAppContainer(EmployeeTaskNav)
 
+const EmployeeEvaluateNav = createStackNavigator({
+    EvaluateList: {
+        screen: EvaluateListScreen
+    },
+    Evaluate: {
+        screen: EvaluateScreen
+    },
+    EvaluateDetail: {
+        screen: EvaluationDetailScreen
+    }
+}, {
+    defaultNavigationOptions: {
+        header: null
+    }
+})
+
+export const EmployeeEvaluateNavContainer = createAppContainer(EmployeeEvaluateNav)
+

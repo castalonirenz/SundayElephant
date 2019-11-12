@@ -11,9 +11,10 @@ const EvaluationList = (props) => {
     const [evaluation, setEvaluation] = useState([])
     
     useEffect(()=> {
+        console.log('render')
         const Employee = props.navigation.getParam('employee', null)
         axios.post('http://sunday.fitnessforlifetoday.com/api/getEvaluation', {
-            user_id: Employee.id
+            user_id: Employee !== null ? Employee.id : props.Credentials.id
         })
             .then((response) => {
                 console.log(response.data.data, "response")
@@ -47,7 +48,7 @@ const EvaluationList = (props) => {
     }
 
     const RenderItem = ({ item }) => {
-    
+        console.log(item, "---> item")
         return (
            item.map((items, key) => (
                <TouchableOpacity
@@ -59,8 +60,8 @@ const EvaluationList = (props) => {
                     style={{ width: 100, height: 100, borderRadius: 50, borderColor: "orange" }}
                     source={require('../../Assets/icon/job.png')}
                 /> */}
-                   <Text style={{ fontSize: 24, fontWeight: "bold", marginLeft: 20, color: "green" }}>
-                       {items.employee_name}
+                   <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 20, color: "#fff" }}>
+                       {items.date_of_evaluation}
                    </Text>
                </TouchableOpacity>
            ))
@@ -86,4 +87,12 @@ const EvaluationList = (props) => {
     )
 }
 
-export default connect(null, null)(withNavigation(EvaluationList))
+
+const mapStateToProps = state => {
+    return {
+        Credentials: state.Credentials.info
+    }
+}
+
+
+export default connect(mapStateToProps, null)(withNavigation(EvaluationList))
