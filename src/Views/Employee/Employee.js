@@ -47,6 +47,12 @@ const Employee = (props) => {
         })
     }
 
+    const viewEvaluation = (data) => {
+        props.navigation.navigate('EvaluateList', {
+            employee: data
+        })
+    }
+
 
     const RenderItem = ({ item }) => {
         return (
@@ -62,13 +68,25 @@ const Employee = (props) => {
                         style={{ width: 100, height: 100, borderRadius: 50, borderColor: "orange" }}
                         source={require('../../Assets/icon/avatar.png')}
                     />
-                    <Text style={{ fontSize: 24, fontWeight: "bold", marginLeft: 20, color: "green" }}>
-                        {item.full_name}
-                    </Text>
+                    <View style={{alignItems:"center", justifyContent:"center", marginLeft: 20}}>
+                        <Text style={{ fontSize: 24, fontWeight: "bold", color: "green" }}>
+                            {item.full_name}
+                        </Text>
+                        <TouchableOpacity
+                            style={{ marginTop: 10 }}
+                            onPress={() => viewEvaluation(item)}>
+                            {/* <FontAwesomeIcon icon={faStar} size={40} color="orange" /> */}
+                            <Text style={{ color: "orange" }}>View Evaluation</Text>
+                        </TouchableOpacity>
+                    </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> evaluateEmployee(item)}>
-                    <FontAwesomeIcon icon={faStar} size={40} color="orange" />
-                </TouchableOpacity>
+               <View style={{alignItems:"center"}}>
+                    <TouchableOpacity onPress={() => evaluateEmployee(item)}>
+                        {/* <Text style={{ color: "orange" }}>Evaluate</Text> */}
+                        <FontAwesomeIcon icon={faStar} size={30} color="orange" />
+                    </TouchableOpacity>
+           
+               </View>
           </View>
             
         )

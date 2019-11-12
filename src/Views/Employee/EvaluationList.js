@@ -1,0 +1,89 @@
+import React, {useState, useEffect} from 'react'
+import { SafeAreaView, View, TouchableOpacity, Text, FlatList, Image } from "react-native";
+import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
+import axios from 'axios'
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faCaretDown, faPlus, faArrowLeft, faStar, faEye } from "@fortawesome/free-solid-svg-icons";
+import { HeaderComponent } from '../../Components/indexComponent';
+const EvaluationList = (props) => {
+
+    const [evaluation, setEvaluation] = useState([])
+    
+    useEffect(()=> {
+        const Employee = props.navigation.getParam('employee', null)
+        axios.post('http://sunday.fitnessforlifetoday.com/api/getEvaluation', {
+            user_id: Employee.id
+        })
+            .then((response) => {
+                console.log(response.data.data, "response")
+                setEvaluation(response.data.data)
+              
+            })
+            .catch((err => {
+
+             
+            }))
+
+      
+    }, [])
+
+    const renderMe = () => {
+        
+       if(evaluation.length !== 0){
+          return evaluation.map((items, index) => {
+              return items.content
+          })
+       }
+       else{
+
+       }
+    }
+    const goToEvaluateDetail = (item) => {
+        console.log(item, "--> item")
+        props.navigation.navigate('EvaluateDetail', {
+            evaluation: item
+        })
+    }
+
+    const RenderItem = ({ item }) => {
+    
+        return (
+           item.map((items, key) => (
+               <TouchableOpacity
+                   onPress={goToEvaluateDetail.bind(this, items)}
+                   style={{ padding: 10, flexDirection: "row", alignItems: "center" }}>
+                   <FontAwesomeIcon icon={faEye} size={30} color={"orange"} />
+                   {/* <Image
+                    resizeMode="contain"
+                    style={{ width: 100, height: 100, borderRadius: 50, borderColor: "orange" }}
+                    source={require('../../Assets/icon/job.png')}
+                /> */}
+                   <Text style={{ fontSize: 24, fontWeight: "bold", marginLeft: 20, color: "green" }}>
+                       {items.employee_name}
+                   </Text>
+               </TouchableOpacity>
+           ))
+        )
+    }
+    return(
+        <SafeAreaView style={{ flex: 1, backgroundColor:"#16242a"}}>
+            <HeaderComponent
+                headerText={"Evaluation List"}
+                Icon={faArrowLeft}
+                Toggle={() => props.navigation.goBack()}
+            />
+            {/* <TouchableOpacity onPress={()=> renderMe()}>
+                <Text>TEST</Text>
+            </TouchableOpacity> */}
+            <FlatList
+              
+                data={renderMe()}
+                renderItem={RenderItem.bind(this)}
+                // extraData={props.ProjectList}
+                />
+        </SafeAreaView>
+    )
+}
+
+export default connect(null, null)(withNavigation(EvaluationList))

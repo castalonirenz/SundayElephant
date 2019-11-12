@@ -196,9 +196,9 @@ const TextChange = (val) => {
 const submit = () => {
     console.log(grit,'here?')
     axios.post('http://sunday.fitnessforlifetoday.com/api/saveEvaluation', {
+        user_id: employeeDetails.id,
         content:[
             {
-                employee_id: employeeDetails.id,
                 employee_name: employeeDetails.full_name,
                 date_of_evaluation: moment().format('YYYY-DD-MM HH:mm'),
                 soft_skills:{

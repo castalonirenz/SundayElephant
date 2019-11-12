@@ -10,6 +10,8 @@ import ProfileScreen from '../Views/Profile/userProfile'
 import HomeScreen from '../Views/Home'
 import TaskScreen from "../Views/Tasks/EmployeeTask";
 import EvaluateScreen from '../Views/Employee/Evaluation'
+import EvaluateListScreen from "../Views/Employee/EvaluationList";
+import EvaluationDetailScreen from "../Views/Employee/EvaluationDetails";
 const HomeNav = createStackNavigator({
     Home: {
         screen: HomeScreen
@@ -37,6 +39,12 @@ const EmployeeNav = createStackNavigator({
     },
     Evaluate: {
     screen: EvaluateScreen
+    },
+    EvaluateList:{
+        screen: EvaluateListScreen
+    },
+    EvaluateDetail:{
+        screen: EvaluationDetailScreen
     }
 }, {
     defaultNavigationOptions: {
