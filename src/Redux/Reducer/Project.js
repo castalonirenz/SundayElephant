@@ -29,7 +29,10 @@ const ProjectReducer = (state = initialState, action) => {
             }
         case LOG_OUT:
             return {
-                projectList: []
+                projectList: [],
+                tasks: [],
+                totalHours: null,
+                remainingHours: null
             }
         default:
             return state
