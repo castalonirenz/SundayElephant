@@ -89,7 +89,10 @@ export const ProfileNavContainer = createAppContainer(ProfileNav)
 const EmployeeTaskNav = createStackNavigator({
     Task: {
         screen: TaskScreen
-    }
+    },
+    // ViewTask:{
+    //     screen: 
+    // }
 }, {
     defaultNavigationOptions: {
         header: null

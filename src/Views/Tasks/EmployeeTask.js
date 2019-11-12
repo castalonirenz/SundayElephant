@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { SafeAreaView, View, TouchableOpacity, Text } from "react-native";
-import { HeaderComponent } from "../../Components/indexComponent";
+import { HeaderComponent, TaskModal } from "../../Components/indexComponent";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -9,7 +9,8 @@ import axios from 'axios'
 const EmployeeTask = (props) => {
 
     const [taskList, setTaskList] = useState([])
-
+    const [showTasks, setShowTasks] = useState(false)
+    const [taskDetails, setTaskDetails] = useState({})
     const getTask = () => {
         axios.post('http://sunday.fitnessforlifetoday.com/api/taskList', {
            user_id: props.Credentials.id
@@ -44,6 +45,23 @@ const EmployeeTask = (props) => {
         }
     }
 
+    const openTask = (item) => {
+        console.log(item, "--> data")
+        setShowTasks(true)
+        axios.post('http://sunday.fitnessforlifetoday.com/api/viewTask', {
+            task_id: item.id
+        })
+            .then((response) => {
+
+                setTaskDetails(response.data.data)
+
+            })
+            .catch((err => {
+                console.log(err)
+                alert('Error getting project details')
+            }))
+    }
+
 
     const Task = (props) => {
 
@@ -51,7 +69,7 @@ const EmployeeTask = (props) => {
         let TaskComponent =
             ArrayShit.map((items, index) => (
                 <TouchableOpacity
-                    // onPress={() => openTask(items)}
+                    onPress={() => openTask(items)}
                     style={{ width: "100%", padding: 20 }}>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
                         <View style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: colorIndicator(items.status) }} />
@@ -73,12 +91,44 @@ const EmployeeTask = (props) => {
         )
     }
 
+    const updateTaskStatus = () => {
+        console.log(taskDetails)
+        axios.post('http://sunday.fitnessforlifetoday.com/api/updateTaskStatus', {
+            task_id: taskDetails.id,
+            status: "done"
+        })
+            .then((response) => {
+
+
+                // props.getProjectDetails(projectDetails.id)
+                setShowTasks(false)
+            })
+            .catch((err => {
+                console.log(err)
+                alert('Error updating task details')
+            }))
+    }
+
     return(
         <SafeAreaView style={{ flex: 1, backgroundColor:"#16242a"}}>
             <HeaderComponent
                 headerText={"Sunday Elephant"}
                 Icon={faBars}
                 Toggle={() => props.navigation.dispatch(DrawerActions.toggleDrawer())}
+            />
+
+            <TaskModal
+                Visible={showTasks}
+                // Visible={task}
+                taskName={taskDetails.task_name}
+                taskDetails={taskDetails.task_description}
+                status={taskDetails.status}
+                startDate={taskDetails.start_date}
+                endDate={taskDetails.end_date}
+                employeeName={taskDetails.full_name}
+                closeModal={() => setShowTasks(false)}
+                ononRequestClose={() => setShowTasks(false)}
+                complete={() => updateTaskStatus()}
             />
 
             <Task tasksData={taskList} />

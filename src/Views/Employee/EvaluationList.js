@@ -3,8 +3,9 @@ import { SafeAreaView, View, TouchableOpacity, Text, FlatList, Image } from "rea
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import axios from 'axios'
+import { DrawerActions } from 'react-navigation-drawer';
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faCaretDown, faPlus, faArrowLeft, faStar, faEye } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faPlus, faArrowLeft, faStar, faEye, faBars } from "@fortawesome/free-solid-svg-icons";
 import { HeaderComponent } from '../../Components/indexComponent';
 const EvaluationList = (props) => {
 
@@ -71,8 +72,8 @@ const EvaluationList = (props) => {
         <SafeAreaView style={{ flex: 1, backgroundColor:"#16242a"}}>
             <HeaderComponent
                 headerText={"Evaluation List"}
-                Icon={faArrowLeft}
-                Toggle={() => props.navigation.goBack()}
+                Icon={faBars}
+                Toggle={() => props.navigation.dispatch(DrawerActions.toggleDrawer())}
             />
             {/* <TouchableOpacity onPress={()=> renderMe()}>
                 <Text>TEST</Text>
