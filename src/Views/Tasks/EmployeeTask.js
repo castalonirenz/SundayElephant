@@ -6,11 +6,13 @@ import { withNavigation } from "react-navigation";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { DrawerActions } from 'react-navigation-drawer';
 import axios from 'axios'
+
 const EmployeeTask = (props) => {
 
     const [taskList, setTaskList] = useState([])
     const [showTasks, setShowTasks] = useState(false)
     const [taskDetails, setTaskDetails] = useState({})
+    const [evaluation, setEvaluation] = useState([])
     const getTask = () => {
         axios.post('http://sunday.fitnessforlifetoday.com/api/taskList', {
            user_id: props.Credentials.id
@@ -28,6 +30,7 @@ const EmployeeTask = (props) => {
 
     useEffect(()=>{
         getTask()
+        getEvaluation()
     },[])
 
     const colorIndicator = (status) => {
@@ -45,7 +48,9 @@ const EmployeeTask = (props) => {
         }
     }
 
-    const openTask = (item) => {
+ 
+
+    const openTask = (item) => {``
         console.log(item, "--> data")
         setShowTasks(true)
         axios.post('http://sunday.fitnessforlifetoday.com/api/viewTask', {
