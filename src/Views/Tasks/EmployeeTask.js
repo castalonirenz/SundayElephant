@@ -125,6 +125,7 @@ const EmployeeTask = (props) => {
             <TaskModal
                 Visible={showTasks}
                 // Visible={task}
+                id={taskDetails.id}
                 taskName={taskDetails.task_name}
                 taskDetails={taskDetails.task_description}
                 status={taskDetails.status}

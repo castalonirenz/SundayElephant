@@ -20,7 +20,7 @@ const EvaluationList = (props) => {
             user_id: Employee !== null ? Employee.id : props.Credentials.id
         })
             .then((response) => {
-                console.log(response, "--> get specifiic evaluation")
+                
                 setEvaluation(response.data.data)
 
             })
@@ -38,7 +38,7 @@ const EvaluationList = (props) => {
             user_id: item !== null ? item.id : props.Credentials.id
         })
             .then((response) => {
-                console.log(response, "--> get evaluation all")
+                
                 setOverAll(response.data.data)
 
             })
@@ -172,14 +172,14 @@ const EvaluationList = (props) => {
         }
     }
     const goToEvaluateDetail = (item) => {
-        console.log(item, 'pressed')
+        
         props.navigation.navigate('EvaluateDetail', {
             evaluation: item
         })
     }
 
     const RenderItem = ({ item }) => {
-        console.log(item, "--> item")
+        
         return (
         
                 <TouchableOpacity

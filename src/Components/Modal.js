@@ -7,6 +7,7 @@ import { faWindowClose, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { PieChart } from 'react-native-svg-charts'
 const { width } = Dimensions.get('screen')
 import { TextSvg } from "../utils/Text";
+import axios from 'axios'
 export const M = (props) => {
 
     return (
@@ -67,111 +68,78 @@ export const DateTime = (props) => {
     )
 }
 
-  const Pie = () => {
-        let finalData = []
-        let total = 0
-        if (overAll.length !== 0) {
-            
-            //   overAll.reduce((a, b) =>{
-            //       total = parseInt(a.total)+parseInt(b.total)
-            //     })
-
-            let total = overAll.outstanding + overAll.exceeds_expectations + overAll.meets_expectations + overAll.below_expectations + overAll.unsatisfactory
-
-            finalData.push(
-                {
-                    amount: overAll.outstanding,
-                    key: 0,
-                    percent: overAll.outstanding / total * 100,
-                    svg: {
-                        fill: "orange"
-                    }
-
-                }
-            )
-            finalData.push(
-                {
-                    amount: overAll.exceeds_expectations,
-                    key: 1,
-                    percent: overAll.exceeds_expectations / total * 100,
-                    svg: {
-                        fill: "green"
-                    }
-
-                }
-            )
-            finalData.push(
-                {
-                    amount: overAll.meets_expectations,
-                    key: 2,
-                    percent: overAll.meets_expectations / total * 100,
-                    svg: {
-                        fill: "blue"
-                    }
-
-                }
-            )
-            finalData.push(
-                {
-                    amount: overAll.below_expectations,
-                    key: 3,
-                    percent: overAll.below_expectations / total * 100,
-                    svg: {
-                        fill: "yellow"
-                    }
-
-                }
-            )
-            finalData.push(
-                {
-                    amount: overAll.unsatisfactory,
-                    key: 4,
-                    percent: overAll.unsatisfactory / total * 100,
-                    svg: {
-                        fill: "red"
-                    }
-
-                }
-            )
-            
-        }
-        return (
-            <PieChart
-                // outerRadius={'95%'}
-                valueAccessor={({ item }) => item.amount}
-                style={{ height: 200, width: 200 }}
-                data={finalData}
-                spacing={0}
-                outerRadius={'95%'}
-            >
-                {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
-                <Labels />
-               
-            </PieChart>
-        )
-    }
-
 
 
 
 export const TaskDetails = (props) => {
 
+    const [task, setTask] = useState({})
+    
+    
+    useEffect(()=> {
+        
+        if (props.status === "done" || props.status !== undefined) {
+            
+            axios.post('http://sunday.fitnessforlifetoday.com/api/taskEvaluation', {
+                task_id: props.id
+            })
+                .then((response) => {
+                    
+                    
+                    setTask(response.data.data)
+
+                })
+                .catch((err => {
+                    
+                    alert('Error getting task details')
+                }))
+        }
+    }, [props.id])
+
+
+    const Labels = ({ slices, height, width }) => {
+        return slices.map((slice, index) => {
+            const { labelCentroid, pieCentroid, data } = slice;
+    
+            return (
+             
+
+                    <TextSvg
+                        key={index}
+                        x={pieCentroid[0]}
+                        y={pieCentroid[1]}
+                        fill={'white'}
+                        textAnchor={'middle'}
+                        alignmentBaseline={'middle'}
+                        fontSize={24}
+                        stroke={'black'}
+                        strokeWidth={0.2}
+                    >
+                        {Math.round(data.percent)}%
+                      
+                         {/* <Text>{data.percent}</Text> */}
+                    </TextSvg>
+       
+            )
+        })
+    }
+
+
     const Pie = () => {
         let finalData = []
-        let total = 0
-        if (overAll.length !== 0) {
+        
 
             //   overAll.reduce((a, b) =>{
             //       total = parseInt(a.total)+parseInt(b.total)
             //     })
 
-            let total = overAll.outstanding + overAll.exceeds_expectations + overAll.meets_expectations + overAll.below_expectations + overAll.unsatisfactory
-
+            let total = task.communication + task.creativity_and_skill_set + task.curiosity + task.genuine_concern + task.grit + task.mindfullness + task.ownership + task.personal_branding
+            
             finalData.push(
                 {
-                    amount: overAll.outstanding,
+                    amount: task.communication,
                     key: 0,
-                    percent: overAll.outstanding / total * 100,
+                    percent: task.communication / total * 100,
                     svg: {
                         fill: "orange"
                     }
@@ -180,9 +148,9 @@ export const TaskDetails = (props) => {
             )
             finalData.push(
                 {
-                    amount: overAll.exceeds_expectations,
+                    amount: task.creativity_and_skill_set,
                     key: 1,
-                    percent: overAll.exceeds_expectations / total * 100,
+                    percent: task.creativity_and_skill_set / total * 100,
                     svg: {
                         fill: "green"
                     }
@@ -191,9 +159,9 @@ export const TaskDetails = (props) => {
             )
             finalData.push(
                 {
-                    amount: overAll.meets_expectations,
+                    amount: task.curiosity,
                     key: 2,
-                    percent: overAll.meets_expectations / total * 100,
+                    percent: task.curiosity / total * 100,
                     svg: {
                         fill: "blue"
                     }
@@ -202,9 +170,9 @@ export const TaskDetails = (props) => {
             )
             finalData.push(
                 {
-                    amount: overAll.below_expectations,
+                    amount: task.genuine_concern,
                     key: 3,
-                    percent: overAll.below_expectations / total * 100,
+                    percent: task.genuine_concern / total * 100,
                     svg: {
                         fill: "yellow"
                     }
@@ -213,17 +181,50 @@ export const TaskDetails = (props) => {
             )
             finalData.push(
                 {
-                    amount: overAll.unsatisfactory,
+                    amount: task.grit,
                     key: 4,
-                    percent: overAll.unsatisfactory / total * 100,
+                    percent: task.grit / total * 100,
                     svg: {
                         fill: "red"
                     }
 
                 }
             )
+        finalData.push(
+            {
+                amount: task.mindfulness,
+                key: 4,
+                percent: task.mindfullness / total * 100,
+                svg: {
+                    fill: "pink"
+                }
 
-        }
+            }
+        )
+        finalData.push(
+            {
+                amount: task.ownership,
+                key: 4,
+                percent: task.ownership / total * 100,
+                svg: {
+                    fill: "brown"
+                }
+
+            }
+        )
+        finalData.push(
+            {
+                amount: task.personal_branding,
+                key: 4,
+                percent: task.personal_branding / total * 100,
+                svg: {
+                    fill: "violet"
+                }
+
+            }
+        )
+
+        
         return (
             <PieChart
                 // outerRadius={'95%'}
@@ -253,7 +254,7 @@ export const TaskDetails = (props) => {
 
 
 
-                    <View style={[Style.Shadow, { backgroundColor: "#423e3e", padding: 0, width: "80%", borderRadius: 10, alignItems: "center", height: "60%", justifyContent: "center" }]}>
+                    <View style={[Style.Shadow, { backgroundColor: "#423e3e", padding: 0, width: "80%", borderRadius: 10, alignItems: "center", height:"80%", justifyContent: "center" }]}>
                         <TouchableOpacity
                             onPress={props.closeModal}
                             style={{ position: "absolute", top: 20, right: 20 }}>
@@ -298,6 +299,52 @@ export const TaskDetails = (props) => {
                             style={{ marginTop: 10, width: "70%", borderRadius: 30, backgroundColor: "green", alignItems: "center", height: "10%", justifyContent: "center", padding: 5 }}>
                             <Text style={{ fontSize: 14, fontWeight: "bold", color: "#fff" }}>MARK AS COMPLETE</Text>
                         </TouchableOpacity> : null}
+
+                        {props.status === "done" || task!== null ? <Pie/> : null}
+                        {props.status === "done" ?
+                        <View>
+                            <View style={{flexDirection:"row", alignItems:"center"}}>
+                                    <View style={{ height: 15, width: 15, backgroundColor: "orange" }} />
+
+                                    <Text style={{color:"#fff", marginLeft: 10}}>Communication</Text>
+                            </View>
+                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                    <View style={{ height: 15, width: 15, backgroundColor: "green" }} />
+
+                                    <Text style={{ color: "#fff", marginLeft: 10 }}>Creativity and Skill Set</Text>
+                                </View>
+                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                    <View style={{ height: 15, width: 15, backgroundColor: "blue" }} />
+
+                                    <Text style={{ color: "#fff", marginLeft: 10 }}>Curiosity</Text>
+                                </View>
+                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                    <View style={{ height: 15, width: 15, backgroundColor: "yellow" }} />
+
+                                    <Text style={{ color: "#fff", marginLeft: 10 }}>Genuine Concern</Text>
+                                </View>
+                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                    <View style={{ height: 15, width: 15, backgroundColor: "red" }} />
+
+                                    <Text style={{ color: "#fff", marginLeft: 10 }}>Grit</Text>
+                                </View>
+                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                    <View style={{ height: 15, width: 15, backgroundColor: "pink" }} />
+
+                                    <Text style={{ color: "#fff", marginLeft: 10 }}>Mindfullness</Text>
+                                </View>
+                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                    <View style={{ height: 15, width: 15, backgroundColor: "brown" }} />
+
+                                    <Text style={{ color: "#fff", marginLeft: 10 }}>Ownership</Text>
+                                </View>
+                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                    <View style={{ height: 15, width: 15, backgroundColor: "violet" }} />
+
+                                    <Text style={{ color: "#fff", marginLeft: 10 }}>Personal Branding</Text>
+                                </View>
+                        </View>
+                        : null}
                     </View>
                     {/* </View> */}
                 </View>

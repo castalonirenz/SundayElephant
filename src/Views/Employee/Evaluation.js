@@ -57,16 +57,18 @@ const selectedRadio = (data, key) => {
 
 useEffect(()=>{
     
-   
+
     const Route = props.navigation.getParam('route', null) 
+    
     if (Route === "employee") {
         const Employee = props.navigation.getParam('employee', null)
         setEmployeeDetails(Employee)
         
     }
     else if(Route === "project"){
-        const Task = props.navigation.getParam('project', null)
-        setEmployeeDetails(Task)
+        const Task = props.navigation.getParam('taskDetails', null)
+        
+        setTaskDetails(Task)
     }
     setRoute(Route)
    
@@ -152,11 +154,12 @@ const submit = () => {
             }))
     }
     else if(Route === "project"){
+        
         axios.post('http://sunday.fitnessforlifetoday.com/api/saveTaskEvaluation', {
             task_id: taskDetails.id,
             content:
             {
-                employee_name: taskDetails.id,
+                task_id: taskDetails.id,
                 date_of_evaluation: moment().format('YYYY-DD-MM HH:mm'),
                 soft_skills: {
                     grit: grit,
