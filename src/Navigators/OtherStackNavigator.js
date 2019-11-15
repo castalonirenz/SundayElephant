@@ -66,6 +66,9 @@ const ProjectNav = createStackNavigator({
     },
     CreateTask:{
         screen: CreateTasksScreen
+    },
+    EvaluateEmployee:{
+        screen: EvaluateScreen
     }
 }, {
     defaultNavigationOptions: {

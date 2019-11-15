@@ -14,13 +14,13 @@ const EvaluationList = (props) => {
     const [evaluation, setEvaluation] = useState([])
     const [overAll, setOverAll] = useState([])
     useEffect(() => {
-        console.log('render')
+        
         const Employee = props.navigation.getParam('employee', null)
         axios.post('http://sunday.fitnessforlifetoday.com/api/getEvaluation', {
             user_id: Employee !== null ? Employee.id : props.Credentials.id
         })
             .then((response) => {
-                console.log(response.data.data, "response")
+                console.log(response, "--> get specifiic evaluation")
                 setEvaluation(response.data.data)
 
             })
@@ -28,18 +28,17 @@ const EvaluationList = (props) => {
 
 
             }))
-        getEvaluation()
-
+        getEvaluation(Employee)
+            
     }, [])
 
 
     const getEvaluation = (item) => {
-        console.log(item, "--> data")
         axios.post('http://sunday.fitnessforlifetoday.com/api/analyticsEvaluation', {
-            user_ide: props.Credentials.id
+            user_id: item !== null ? item.id : props.Credentials.id
         })
             .then((response) => {
-                console.log(response.data.data, "--> analytics")
+                console.log(response, "--> get evaluation all")
                 setOverAll(response.data.data)
 
             })
@@ -54,20 +53,7 @@ const EvaluationList = (props) => {
             const { labelCentroid, pieCentroid, data } = slice;
             return (
                 <View>
-                    {/* <TextSvg
-                        key={index}
-                        x={pieCentroid[0]}
-                        y={pieCentroid[2]}
-                        fill={'white'}
-                        textAnchor={'middle'}
-                        alignmentBaseline={'middle'}
-                        fontSize={16}
-                        stroke={'black'}
-                        strokeWidth={0.2}
-                    >
-                        {data.amount}
-
-                    </TextSvg> */}
+               
                     <TextSvg
                         key={index}
                         x={pieCentroid[0]}
@@ -75,25 +61,11 @@ const EvaluationList = (props) => {
                         fill={'white'}
                         textAnchor={'middle'}
                         alignmentBaseline={'middle'}
-                        fontSize={16}
-                        stroke={'black'}
-                        strokeWidth={0.2}
-                    >
-                        {/* {data.amount} */}
-
-                    </TextSvg>
-                    <TextSvg
-                        key={index}
-                        x={pieCentroid[0]}
-                        y={pieCentroid[2]}
-                        fill={'orange'}
-                        textAnchor={'middle'}
-                        alignmentBaseline={'middle'}
                         fontSize={24}
                         stroke={'black'}
                         strokeWidth={0.2}
                     >
-                        {Math.round(data.amount)}%
+                        {Math.round(data.percent)}%
 
                     </TextSvg>
                 </View>
@@ -105,7 +77,7 @@ const EvaluationList = (props) => {
         let finalData = []
         let total = 0
         if (overAll.length !== 0) {
-            console.log(overAll, "--> pie data")
+            
             //   overAll.reduce((a, b) =>{
             //       total = parseInt(a.total)+parseInt(b.total)
             //     })
@@ -160,14 +132,14 @@ const EvaluationList = (props) => {
                 {
                     amount: overAll.unsatisfactory,
                     key: 4,
-                    percent: overAll.unsatisfactorys / total * 100,
+                    percent: overAll.unsatisfactory / total * 100,
                     svg: {
                         fill: "red"
                     }
 
                 }
             )
-            console.log(finalData, "--> final")
+            
         }
         return (
             <PieChart
@@ -178,7 +150,9 @@ const EvaluationList = (props) => {
                 spacing={0}
                 outerRadius={'95%'}
             >
+                {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
                 <Labels />
+               
             </PieChart>
         )
     }
@@ -190,24 +164,26 @@ const EvaluationList = (props) => {
             return evaluation.map((items, index) => {
                 return items.content
             })
+
+    
         }
         else {
 
         }
     }
     const goToEvaluateDetail = (item) => {
-        console.log(item, "--> item")
+        console.log(item, 'pressed')
         props.navigation.navigate('EvaluateDetail', {
             evaluation: item
         })
     }
 
     const RenderItem = ({ item }) => {
-        console.log(item, "---> item")
+        console.log(item, "--> item")
         return (
-            item.map((items, key) => (
+        
                 <TouchableOpacity
-                    onPress={goToEvaluateDetail.bind(this, items)}
+                    onPress={goToEvaluateDetail.bind(this, item)}
                     style={{ padding: 10, flexDirection: "row", alignItems: "center" }}>
                     <FontAwesomeIcon icon={faEye} size={30} color={"orange"} />
                     {/* <Image
@@ -216,10 +192,10 @@ const EvaluationList = (props) => {
                     source={require('../../Assets/icon/job.png')}
                 /> */}
                     <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 20, color: "#fff" }}>
-                        {items.date_of_evaluation}
+                        {item.date_of_evaluation}
                     </Text>
                 </TouchableOpacity>
-            ))
+         
         )
     }
     return (

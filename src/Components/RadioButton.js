@@ -8,10 +8,11 @@ export const RadioButton = props => {
         <ScrollView disableScrollViewPanResponder={true} style={{ width: "100%", maxHeight: height / 2 }}>
 
             {props.options.map((item, key) => {
-                console.log(props.value === props.storedValue)
+                
                 return (
 
                     <TouchableOpacity
+                        disabled={props.disabled}
                         onPress={props.onPress.bind(null, item)}
                         style={[props.style, { flexDirection: "row" }]}
                         key={key}>

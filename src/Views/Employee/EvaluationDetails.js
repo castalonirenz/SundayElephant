@@ -23,99 +23,10 @@ const EvaluationDetails = (props) => {
     const [array, setArray] = useState([])
     const [employeeDetails, setEmployeeDetails] = useState({})
     const [jobPerformance, setJobPerformance] = useState("")
-    //     const array =  {
-    //         content: [
-    //             employee_id,
-    //             period,
-    //             position,
-    //             date_of_evaluation,
-    //             soft_skills: [
-    //                 grit: {
-    //                     outstanding,
-    //                     exceeds_expectations,
-    //                     meets_expectations,
-    //                     below_expectations,
-    //                     unsatisfactory,
-    //                 },
-    //                 ownership: {
-    //                     outstanding,
-    //                     exceeds_expectations,
-    //                     meets_expectations,
-    //                     below_expectations,
-    //                     unsatisfactory,
-    //                 },
-    //                 genuine_concern: {
-    //                     outstanding,
-    //                     exceeds_expectations,
-    //                     meets_expectations,
-    //                     below_expectations,
-    //                     unsatisfactory,
-    //                 },
-    //                 mindfullness: {
-    //                     outstanding,
-    //                     exceeds_expectations,
-    //                     meets_expectations,
-    //                     below_expectations,
-    //                     unsatisfactory,
-    //                 },
-    //                 curiosity: {
-    //                     outstanding,
-    //                     exceeds_expectations,
-    //                     meets_expectations,
-    //                     below_expectations,
-    //                     unsatisfactory,
-    //                 },
-    //                 communication: {
-    //                     outstanding,
-    //                     exceeds_expectations,
-    //                     meets_expectations,
-    //                     below_expectations,
-    //                     unsatisfactory,
-    //                 },
 
-
-    //                 personal_branding: {
-    //                     outstanding,
-    //                     exceeds_expectations,
-    //                     meets_expectations,
-    //                     below_expectations,
-    //                     unsatisfactory,
-    //                 },
-    //                 creativity_and_skill_set: {
-    //                     outstanding,
-    //                     exceeds_expectations,
-    //                     meets_expectations,
-    //                     below_expectations,
-    //                     unsatisfactory,
-    //                 },
-    //                 personal_branding: {
-    //                     outstanding,
-    //                     exceeds_expectations,
-    //                     meets_expectations,
-    //                     below_expectations,
-    //                     unsatisfactory,
-    //                 },
-    //             ], // end of skill set
-    //             job_performance: ]
-    //   { account, project, scope_of_work },
-    //     { account, project, scope_of_work },
-    //     { account, project, scope_of_work },
-    //     { account, project, scope_of_work },
-    //     { account, project, scope_of_work },
-    //     { account, project, scope_of_work },
-    //     { account, project, scope_of_work },
-    //     { account, project, scope_of_work },
-    //     { account, project, scope_of_work },
-    //     { account, project, scope_of_work },  n     fngjjrjjj
-    // ],
-    // employee_strengths_and_accomplishments,
-    //     plan_of_action_towards_improvement,
-    //     new_skillset,
-    //     employee_comments,
-    // ] // end of content
 
     const selectedRadio = (data, key) => {
-        console.log(key, "-->", data)
+        
         if (key === "grit") {
             setGrit(data.key)
         }
@@ -145,7 +56,7 @@ const EvaluationDetails = (props) => {
 
     useEffect(() => {
         const Data = props.navigation.getParam('evaluation', null)
-        console.log(Data, "--> mounted")
+        
         setGrit(Data.soft_skills.grit)
         setCommunication(Data.soft_skills.communication)
         setCreativity(Data.soft_skills.creativity_and_skill_set)
@@ -187,11 +98,12 @@ const EvaluationDetails = (props) => {
         else if (key == "cs") {
             special = creativity
         }
-        // console.log(key, "--> key", special)
+        // 
 
 
         return (
             <RadioButtonComponent
+                disabled={true}
                 onPress={(data) => selectedRadio(data, key)}
                 value={special}
                 // storedValue={"exceeds_expectations"}
@@ -203,40 +115,7 @@ const EvaluationDetails = (props) => {
     const TextChange = (val) => {
         setJobPerformance(val)
     }
-    const submit = () => {
-        console.log(grit, 'here?')
-        axios.post('http://sunday.fitnessforlifetoday.com/api/saveEvaluation', {
-            user_id: employeeDetails.id,
-            content: [
-                {
-                    employee_name: employeeDetails.full_name,
-                    date_of_evaluation: moment().format('YYYY-DD-MM HH:mm'),
-                    soft_skills: {
-                        grit: grit,
-                        ownership: ownership,
-                        genuine_concern: genuine,
-                        mindfullness: mindfullness,
-                        curiosity: curiosity,
-                        communication: comunnication,
-                        personal_branding: personalBranding,
-                        creativity_and_skill_set: creativity
-                    },
-                    job_performance: jobPerformance
-                }
-            ]
-        })
-            .then((response) => {
 
-                console.log(response.data)
-                if (response.data.error_msg === null) {
-                    props.navigation.goBack()
-                }
-            })
-            .catch((err => {
-                console.log(err, "--> error submitting")
-            }))
-
-    }
 
 
     return (

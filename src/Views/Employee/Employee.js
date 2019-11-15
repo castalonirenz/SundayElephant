@@ -43,7 +43,8 @@ const Employee = (props) => {
 
     const evaluateEmployee = (data) => {
         props.navigation.navigate('Evaluate', {
-            employee: data
+            employee: data,
+            route: 'employee'
         })
     }
 

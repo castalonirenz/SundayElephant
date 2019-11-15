@@ -50,23 +50,24 @@ const ProjectDetails = (props) => {
     }
 
     const openTask = (item) => {
+        console.log(item.id, "--> id")
         setShowTasks(true)
         axios.post('http://sunday.fitnessforlifetoday.com/api/viewTask', {
             task_id: item.id
         })
             .then((response) => {
-                
+                console.log(response)
                 setTaskDetails(response.data.data)
 
             })
             .catch((err => {
-
+                console.log(err)
                 alert('Error getting project details')
             }))
     }
 
     const Task = (props) => {
-
+        console.log(props.tasksData, "--> where is this shit")
         let ArrayShit = props.tasksData
         let TaskComponent =
             ArrayShit.map((items, index) => (
@@ -119,9 +120,15 @@ const ProjectDetails = (props) => {
         })
             .then((response) => {
                 
-
+                console.log('pumasok dito')
                 props.getProjectDetails(projectDetails.id)
+             
+                props.navigation.navigate('EvaluateEmployee', {
+                    taskDetails: taskDetails,
+                    route: 'project'
+                })
                 setShowTasks(false)
+                
             })
             .catch((err => {
                 
@@ -146,6 +153,8 @@ const ProjectDetails = (props) => {
                 startDate={taskDetails.start_date}
                 endDate={taskDetails.end_date}
                 employeeName={taskDetails.full_name}
+                completion={taskDetails.status === "done" ? taskDetails.updated_at : '-----'}
+                assignee={taskDetails.username}
                 closeModal={()=>setShowTasks(false)}
                 ononRequestClose={()=>setShowTasks(false)}
                 complete={()=> updateTaskStatus()}

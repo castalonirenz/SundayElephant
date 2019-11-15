@@ -10,7 +10,7 @@ export const Login =(credentials) => {
             .then((response) => {
                 
                 if (!response.data.error) {
-                    console.log(response.data.data.role_id)
+                    
                     dispatch(SET_CREDENTIALS(response.data.data))
           
                     

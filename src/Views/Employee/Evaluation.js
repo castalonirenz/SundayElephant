@@ -23,99 +23,11 @@ const Evaluation = (props) => {
     const [array, setArray] = useState([])
     const [employeeDetails, setEmployeeDetails] = useState({})
     const [jobPerformance, setJobPerformance] = useState("")
-//     const array =  {
-//         content: [
-//             employee_id,
-//             period,
-//             position,
-//             date_of_evaluation,
-//             soft_skills: [
-//                 grit: {
-//                     outstanding,
-//                     exceeds_expectations,
-//                     meets_expectations,
-//                     below_expectations,
-//                     unsatisfactory,
-//                 },
-//                 ownership: {
-//                     outstanding,
-//                     exceeds_expectations,
-//                     meets_expectations,
-//                     below_expectations,
-//                     unsatisfactory,
-//                 },
-//                 genuine_concern: {
-//                     outstanding,
-//                     exceeds_expectations,
-//                     meets_expectations,
-//                     below_expectations,
-//                     unsatisfactory,
-//                 },
-//                 mindfullness: {
-//                     outstanding,
-//                     exceeds_expectations,
-//                     meets_expectations,
-//                     below_expectations,
-//                     unsatisfactory,
-//                 },
-//                 curiosity: {
-//                     outstanding,
-//                     exceeds_expectations,
-//                     meets_expectations,
-//                     below_expectations,
-//                     unsatisfactory,
-//                 },
-//                 communication: {
-//                     outstanding,
-//                     exceeds_expectations,
-//                     meets_expectations,
-//                     below_expectations,
-//                     unsatisfactory,
-//                 },
-
-
-//                 personal_branding: {
-//                     outstanding,
-//                     exceeds_expectations,
-//                     meets_expectations,
-//                     below_expectations,
-//                     unsatisfactory,
-//                 },
-//                 creativity_and_skill_set: {
-//                     outstanding,
-//                     exceeds_expectations,
-//                     meets_expectations,
-//                     below_expectations,
-//                     unsatisfactory,
-//                 },
-//                 personal_branding: {
-//                     outstanding,
-//                     exceeds_expectations,
-//                     meets_expectations,
-//                     below_expectations,
-//                     unsatisfactory,
-//                 },
-//             ], // end of skill set
-//             job_performance: ]
-//   { account, project, scope_of_work },
-//     { account, project, scope_of_work },
-//     { account, project, scope_of_work },
-//     { account, project, scope_of_work },
-//     { account, project, scope_of_work },
-//     { account, project, scope_of_work },
-//     { account, project, scope_of_work },
-//     { account, project, scope_of_work },
-//     { account, project, scope_of_work },
-//     { account, project, scope_of_work },  n     fngjjrjjj
-// ],
-// employee_strengths_and_accomplishments,
-//     plan_of_action_towards_improvement,
-//     new_skillset,
-//     employee_comments,
-// ] // end of content
-
+    const [taskDetails, setTaskDetails] = useState({})
+    const [route, setRoute] = useState(null)
+    
 const selectedRadio = (data, key) => {
-    console.log(key, "-->", data)
+    
     if (key === "grit") {
         setGrit(data.key)
     }
@@ -144,10 +56,20 @@ const selectedRadio = (data, key) => {
 }
 
 useEffect(()=>{
-    console.log(grit)
-    const Employee = props.navigation.getParam('employee', null)
-  
-    setEmployeeDetails(Employee)
+    
+   
+    const Route = props.navigation.getParam('route', null) 
+    if (Route === "employee") {
+        const Employee = props.navigation.getParam('employee', null)
+        setEmployeeDetails(Employee)
+        
+    }
+    else if(Route === "project"){
+        const Task = props.navigation.getParam('project', null)
+        setEmployeeDetails(Task)
+    }
+    setRoute(Route)
+   
 },[])
 
 const rendenRadio = (data, key) =>{
@@ -177,7 +99,7 @@ const rendenRadio = (data, key) =>{
     else if (key == "cs") {
         special = creativity
     }
-    // console.log(key, "--> key", special)
+    // 
     
 
     return(
@@ -194,14 +116,17 @@ const TextChange = (val) => {
     setJobPerformance(val)
 }
 const submit = () => {
-    console.log(grit,'here?')
-    axios.post('http://sunday.fitnessforlifetoday.com/api/saveEvaluation', {
-        user_id: employeeDetails.id,
-        content:[
+
+    const Route = props.navigation.getParam('route', null) 
+
+    if(Route === "employee"){
+        axios.post('http://sunday.fitnessforlifetoday.com/api/saveEvaluation', {
+            user_id: employeeDetails.id,
+            content:
             {
                 employee_name: employeeDetails.full_name,
                 date_of_evaluation: moment().format('YYYY-DD-MM HH:mm'),
-                soft_skills:{
+                soft_skills: {
                     grit: grit,
                     ownership: ownership,
                     genuine_concern: genuine,
@@ -211,22 +136,66 @@ const submit = () => {
                     personal_branding: personalBranding,
                     creativity_and_skill_set: creativity
                 },
-                   job_performance: jobPerformance
+                job_performance: jobPerformance
             }
-        ]
-    })
-        .then((response) => {
 
-          console.log(response.data)
-          if(response.data.error_msg === null){
-              props.navigation.goBack()
-          }
         })
-        .catch((err => {
-            console.log(err, "--> error submitting")
-        }))
+            .then((response) => {
+
+
+                if (response.data.error_msg === null) {
+                    props.navigation.goBack()
+                }
+            })
+            .catch((err => {
+
+            }))
+    }
+    else if(Route === "project"){
+        axios.post('http://sunday.fitnessforlifetoday.com/api/saveTaskEvaluation', {
+            task_id: taskDetails.id,
+            content:
+            {
+                employee_name: taskDetails.id,
+                date_of_evaluation: moment().format('YYYY-DD-MM HH:mm'),
+                soft_skills: {
+                    grit: grit,
+                    ownership: ownership,
+                    genuine_concern: genuine,
+                    mindfullness: mindfullness,
+                    curiosity: curiosity,
+                    communication: comunnication,
+                    personal_branding: personalBranding,
+                    creativity_and_skill_set: creativity
+                },
+                job_performance: jobPerformance
+            }
+
+        })
+            .then((response) => {
+
+
+                if (response.data.error_msg === null) {
+                    props.navigation.goBack()
+                }
+            })
+            .catch((err => {
+
+            }))
+    }
+    
+    
 
 }
+
+    const displayText = () => {
+        if(route === "employee"){
+            return <Text style={{ color: "orange", fontWeight: "bold", fontSize: 18 }}>{employeeDetails.full_name}</Text>
+        }
+        else if(route === "project"){
+            return <Text style={{ color: "orange", fontWeight: "bold", fontSize: 18 }}>{taskDetails.id}</Text>
+        }
+    }
 
 
     return(
@@ -240,7 +209,7 @@ const submit = () => {
           <ScrollView contentContainerStyle={{flexGrow: 1}}>
               <View style={{flex: 1}}>
                     <View style={{padding: 20, width:"100%", alignItems:"center", justifyContent:"center"}}>
-                        <Text style={{ color: "orange", fontWeight: "bold", fontSize: 18 }}>{employeeDetails.full_name}</Text>
+                        {displayText()}
                     </View>
                     {SoftSkills.map((items, k) => {
                         return (

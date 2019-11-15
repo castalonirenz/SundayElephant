@@ -67,8 +67,180 @@ export const DateTime = (props) => {
     )
 }
 
+  const Pie = () => {
+        let finalData = []
+        let total = 0
+        if (overAll.length !== 0) {
+            
+            //   overAll.reduce((a, b) =>{
+            //       total = parseInt(a.total)+parseInt(b.total)
+            //     })
+
+            let total = overAll.outstanding + overAll.exceeds_expectations + overAll.meets_expectations + overAll.below_expectations + overAll.unsatisfactory
+
+            finalData.push(
+                {
+                    amount: overAll.outstanding,
+                    key: 0,
+                    percent: overAll.outstanding / total * 100,
+                    svg: {
+                        fill: "orange"
+                    }
+
+                }
+            )
+            finalData.push(
+                {
+                    amount: overAll.exceeds_expectations,
+                    key: 1,
+                    percent: overAll.exceeds_expectations / total * 100,
+                    svg: {
+                        fill: "green"
+                    }
+
+                }
+            )
+            finalData.push(
+                {
+                    amount: overAll.meets_expectations,
+                    key: 2,
+                    percent: overAll.meets_expectations / total * 100,
+                    svg: {
+                        fill: "blue"
+                    }
+
+                }
+            )
+            finalData.push(
+                {
+                    amount: overAll.below_expectations,
+                    key: 3,
+                    percent: overAll.below_expectations / total * 100,
+                    svg: {
+                        fill: "yellow"
+                    }
+
+                }
+            )
+            finalData.push(
+                {
+                    amount: overAll.unsatisfactory,
+                    key: 4,
+                    percent: overAll.unsatisfactory / total * 100,
+                    svg: {
+                        fill: "red"
+                    }
+
+                }
+            )
+            
+        }
+        return (
+            <PieChart
+                // outerRadius={'95%'}
+                valueAccessor={({ item }) => item.amount}
+                style={{ height: 200, width: 200 }}
+                data={finalData}
+                spacing={0}
+                outerRadius={'95%'}
+            >
+                {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
+                <Labels />
+               
+            </PieChart>
+        )
+    }
+
+
+
 
 export const TaskDetails = (props) => {
+
+    const Pie = () => {
+        let finalData = []
+        let total = 0
+        if (overAll.length !== 0) {
+
+            //   overAll.reduce((a, b) =>{
+            //       total = parseInt(a.total)+parseInt(b.total)
+            //     })
+
+            let total = overAll.outstanding + overAll.exceeds_expectations + overAll.meets_expectations + overAll.below_expectations + overAll.unsatisfactory
+
+            finalData.push(
+                {
+                    amount: overAll.outstanding,
+                    key: 0,
+                    percent: overAll.outstanding / total * 100,
+                    svg: {
+                        fill: "orange"
+                    }
+
+                }
+            )
+            finalData.push(
+                {
+                    amount: overAll.exceeds_expectations,
+                    key: 1,
+                    percent: overAll.exceeds_expectations / total * 100,
+                    svg: {
+                        fill: "green"
+                    }
+
+                }
+            )
+            finalData.push(
+                {
+                    amount: overAll.meets_expectations,
+                    key: 2,
+                    percent: overAll.meets_expectations / total * 100,
+                    svg: {
+                        fill: "blue"
+                    }
+
+                }
+            )
+            finalData.push(
+                {
+                    amount: overAll.below_expectations,
+                    key: 3,
+                    percent: overAll.below_expectations / total * 100,
+                    svg: {
+                        fill: "yellow"
+                    }
+
+                }
+            )
+            finalData.push(
+                {
+                    amount: overAll.unsatisfactory,
+                    key: 4,
+                    percent: overAll.unsatisfactory / total * 100,
+                    svg: {
+                        fill: "red"
+                    }
+
+                }
+            )
+
+        }
+        return (
+            <PieChart
+                // outerRadius={'95%'}
+                valueAccessor={({ item }) => item.amount}
+                style={{ height: 200, width: 200 }}
+                data={finalData}
+                spacing={0}
+                outerRadius={'95%'}
+            >
+                {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
+                <Labels />
+
+            </PieChart>
+        )
+    }
+
+
 
     return (
         <View >
@@ -105,8 +277,12 @@ export const TaskDetails = (props) => {
                                 <Text style={{ color: "orange" }}>To: </Text>
                                 <Text style={{ color: "#fff" }}>{props.endDate}</Text>
                             </View>
+                            <View style={{ flexDirection: "row", marginTop: 10 }}>
+                                <Text style={{ color: "orange" }}>Completion: </Text>
+                                <Text style={{ color: "#fff" }}>{props.completion}</Text>
+                            </View>
 
-                            <Text style={{ color: "orange", marginTop: 20 }}>Assigned to:</Text>
+                    <Text style={{ color: "orange", marginTop: 20 }}>Assigned to: {props.assignee}</Text>
                             <View style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}>
                                 <FlatList
                                     renderItem={props.renderItem}
@@ -116,12 +292,12 @@ export const TaskDetails = (props) => {
                             </View>
                         </View>
 
-                        <TouchableOpacity
+                        {props.status !== "done" ? <TouchableOpacity
                             // onPress={props.Selected.bind(null, 2)}
                             onPress={props.complete}
                             style={{ marginTop: 10, width: "70%", borderRadius: 30, backgroundColor: "green", alignItems: "center", height: "10%", justifyContent: "center", padding: 5 }}>
                             <Text style={{ fontSize: 14, fontWeight: "bold", color: "#fff" }}>MARK AS COMPLETE</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> : null}
                     </View>
                     {/* </View> */}
                 </View>
@@ -154,11 +330,11 @@ export const EmployeeDetails = (props) => {
     let finalData = []
     let total = 0
     if (pieData.length !== 0) {
-        console.log(pieData, "--> pie data")
+        
       pieData.reduce((a, b) =>{
           total = parseInt(a.total)+parseInt(b.total)
         })
-        console.log(total, "--> same")
+        
 
         pieData.map((items, index) => {
             

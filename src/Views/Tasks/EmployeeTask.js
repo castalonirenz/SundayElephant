@@ -18,7 +18,7 @@ const EmployeeTask = (props) => {
            user_id: props.Credentials.id
         })
             .then((response) => {
-                    console.log(response.data.data, "--> eto un")
+                    
                     setTaskList(response.data.data)
             })
             .catch((err => {
@@ -30,7 +30,7 @@ const EmployeeTask = (props) => {
 
     useEffect(()=>{
         getTask()
-        getEvaluation()
+        // getEvaluation()
     },[])
 
     const colorIndicator = (status) => {
@@ -51,18 +51,18 @@ const EmployeeTask = (props) => {
  
 
     const openTask = (item) => {``
-        console.log(item, "--> data")
+        
         setShowTasks(true)
         axios.post('http://sunday.fitnessforlifetoday.com/api/viewTask', {
             task_id: item.id
         })
             .then((response) => {
-
+                
                 setTaskDetails(response.data.data)
 
             })
             .catch((err => {
-                console.log(err)
+                
                 alert('Error getting project details')
             }))
     }
@@ -97,19 +97,19 @@ const EmployeeTask = (props) => {
     }
 
     const updateTaskStatus = () => {
-        console.log(taskDetails)
+        
         axios.post('http://sunday.fitnessforlifetoday.com/api/updateTaskStatus', {
             task_id: taskDetails.id,
             status: "done"
         })
             .then((response) => {
-
+                
 
                 // props.getProjectDetails(projectDetails.id)
                 setShowTasks(false)
             })
             .catch((err => {
-                console.log(err)
+                
                 alert('Error updating task details')
             }))
     }
@@ -130,6 +130,8 @@ const EmployeeTask = (props) => {
                 status={taskDetails.status}
                 startDate={taskDetails.start_date}
                 endDate={taskDetails.end_date}
+                completion={taskDetails.status === "done" ? taskDetails.updated_at : '-----'}
+                assignee={taskDetails.username}
                 employeeName={taskDetails.full_name}
                 closeModal={() => setShowTasks(false)}
                 ononRequestClose={() => setShowTasks(false)}
