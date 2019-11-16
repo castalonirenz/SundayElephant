@@ -74,23 +74,23 @@ export const DateTime = (props) => {
 export const TaskDetails = (props) => {
 
     const [task, setTask] = useState({})
-    
-    
-    useEffect(()=> {
-        
+
+
+    useEffect(() => {
+
         if (props.status === "done" || props.status !== undefined) {
-            
+
             axios.post('http://sunday.fitnessforlifetoday.com/api/taskEvaluation', {
                 task_id: props.id
             })
                 .then((response) => {
-                    
+
                     
                     setTask(response.data.data)
 
                 })
                 .catch((err => {
-                    
+
                     alert('Error getting task details')
                 }))
         }
@@ -100,26 +100,27 @@ export const TaskDetails = (props) => {
     const Labels = ({ slices, height, width }) => {
         return slices.map((slice, index) => {
             const { labelCentroid, pieCentroid, data } = slice;
-    
-            return (
-             
 
-                    <TextSvg
-                        key={index}
-                        x={pieCentroid[0]}
-                        y={pieCentroid[1]}
-                        fill={'white'}
-                        textAnchor={'middle'}
-                        alignmentBaseline={'middle'}
-                        fontSize={24}
-                        stroke={'black'}
-                        strokeWidth={0.2}
-                    >
-                        {Math.round(data.percent)}%
-                      
-                         {/* <Text>{data.percent}</Text> */}
-                    </TextSvg>
-       
+            return (
+
+
+                <TextSvg
+                    key={index}
+                    x={pieCentroid[0]}
+                    y={pieCentroid[1]}
+                    fill={'white'}
+                    textAnchor={'middle'}
+                    alignmentBaseline={'middle'}
+                    fontSize={24}
+                    stroke={'black'}
+                    strokeWidth={0.2}
+                >
+                    {Math.round(data.percent)}%
+                        {}
+                    {}
+                    {/* <Text>{data.percent}</Text> */}
+                </TextSvg>
+
             )
         })
     }
@@ -127,72 +128,178 @@ export const TaskDetails = (props) => {
 
     const Pie = () => {
         let finalData = []
+        let communication = []
+        let creativity = []
+        let curiosity = []
+        let genuine = []
+        let grit = []
+        let mindfullness = []
+        let ownership = []
+        let personal = []
+
+        //   overAll.reduce((a, b) =>{
+        //       total = parseInt(a.total)+parseInt(b.total)
+        //     })
         
 
-            //   overAll.reduce((a, b) =>{
-            //       total = parseInt(a.total)+parseInt(b.total)
-            //     })
+        let total = task.communication + task.creativity_and_skill_set + task.curiosity + task.genuine_concern + task.grit + task.mindfullness + task.ownership + task.personal_branding
 
-            let total = task.communication + task.creativity_and_skill_set + task.curiosity + task.genuine_concern + task.grit + task.mindfullness + task.ownership + task.personal_branding
-            
-            finalData.push(
-                {
-                    amount: task.communication,
-                    key: 0,
-                    percent: task.communication / total * 100,
-                    svg: {
-                        fill: "orange"
-                    }
-
+        communication.push(
+            {
+                amount: task.communication,
+                key: 0,
+                percent: task.communication / 5 * 100,
+                svg: {
+                    fill: "orange"
                 }
-            )
-            finalData.push(
-                {
-                    amount: task.creativity_and_skill_set,
-                    key: 1,
-                    percent: task.creativity_and_skill_set / total * 100,
-                    svg: {
-                        fill: "green"
-                    }
 
-                }
-            )
-            finalData.push(
-                {
-                    amount: task.curiosity,
-                    key: 2,
-                    percent: task.curiosity / total * 100,
-                    svg: {
-                        fill: "blue"
-                    }
+            }
+        )
 
+        creativity.push(
+            {
+                amount: task.creativity_and_skill_set,
+                key: 0,
+                percent: task.creativity_and_skill_set / 5 * 100,
+                svg: {
+                    fill: "green"
                 }
-            )
-            finalData.push(
-                {
-                    amount: task.genuine_concern,
-                    key: 3,
-                    percent: task.genuine_concern / total * 100,
-                    svg: {
-                        fill: "yellow"
-                    }
 
-                }
-            )
-            finalData.push(
-                {
-                    amount: task.grit,
-                    key: 4,
-                    percent: task.grit / total * 100,
-                    svg: {
-                        fill: "red"
-                    }
+            }
+        )
 
+        curiosity.push(
+            {
+                amount: task.curiosity,
+                key: 0,
+                percent: task.curiosity / 5 * 100,
+                svg: {
+                    fill: "blue"
                 }
-            )
+
+            }
+        )
+
+        genuine.push(
+            {
+                amount: task.genuine_concern,
+                key: 0,
+                percent: task.genuine_concern / 5 * 100,
+                svg: {
+                    fill: "yellow"
+                }
+
+            }
+        )
+        grit.push(
+            {
+                amount: task.grit,
+                key: 0,
+                percent: task.grit / 5 * 100,
+                svg: {
+                    fill: "red"
+                }
+
+            }
+        )
+        mindfullness.push(
+            {
+                amount: task.mindfullness,
+                key: 0,
+                percent: task.mindfullness / 5 * 100,
+                svg: {
+                    fill: "pink"
+                }
+
+            }
+        )
+        ownership.push(
+            {
+                amount: task.ownership,
+                key: 0,
+                percent: task.ownership / 5 * 100,
+                svg: {
+                    fill: "brown"
+                }
+
+            }
+        )
+        personal.push(
+            {
+                amount: task.personal_branding,
+                key: 0,
+                percent: task.personal_branding / 5 * 100,
+                svg: {
+                    fill: "violet"
+                }
+
+            }
+        )
+
+
+
+
+
+
+
         finalData.push(
             {
-                amount: task.mindfulness,
+                amount: task.communication,
+                key: 0,
+                percent: task.communication / total * 100,
+                svg: {
+                    fill: "orange"
+                }
+
+            }
+        )
+        finalData.push(
+            {
+                amount: task.creativity_and_skill_set,
+                key: 1,
+                percent: task.creativity_and_skill_set / total * 100,
+                svg: {
+                    fill: "green"
+                }
+
+            }
+        )
+        finalData.push(
+            {
+                amount: task.curiosity,
+                key: 2,
+                percent: task.curiosity / total * 100,
+                svg: {
+                    fill: "blue"
+                }
+
+            }
+        )
+        finalData.push(
+            {
+                amount: task.genuine_concern,
+                key: 3,
+                percent: task.genuine_concern / total * 100,
+                svg: {
+                    fill: "yellow"
+                }
+
+            }
+        )
+        finalData.push(
+            {
+                amount: task.grit,
+                key: 4,
+                percent: task.grit / total * 100,
+                svg: {
+                    fill: "red"
+                }
+
+            }
+        )
+        finalData.push(
+            {
+                amount: task.mindfullness,
                 key: 4,
                 percent: task.mindfullness / total * 100,
                 svg: {
@@ -223,21 +330,147 @@ export const TaskDetails = (props) => {
 
             }
         )
+        // et total = task.communication + task.creativity_and_skill_set + task.curiosity + task.genuine_concern + task.grit + task.mindfullness + task.ownership + task.personal_branding
 
-        
         return (
-            <PieChart
-                // outerRadius={'95%'}
-                valueAccessor={({ item }) => item.amount}
-                style={{ height: 200, width: 200 }}
-                data={finalData}
-                spacing={0}
-                outerRadius={'95%'}
-            >
-                {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
-                <Labels />
+            <View style={{marginTop: 20}}>
+                <View>
+                    <Text style={{ fontWeight: "bold", fontSize: 18, color: "#fff" }}>Overall Evaluation: </Text>
+                    <PieChart
+                        // outerRadius={'95%'}
+                        valueAccessor={({ item }) => item.amount}
+                        style={{ height: 200, width: 200 }}
+                        data={finalData}
+                        spacing={0}
+                        outerRadius={'95%'}
+                    >
+                        {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
+                        <Labels />
 
-            </PieChart>
+                    </PieChart>
+                </View>
+                <View style={{marginTop: 20}}>
+                    <Text style={{ fontWeight: "bold", fontSize: 18, color:"#fff" }}>Communication Evaluation: </Text>
+                    <PieChart
+                        // outerRadius={'95%'}
+                        valueAccessor={({ item }) => item.amount}
+                        style={{ height: 200, width: 200 }}
+                        data={communication}
+                        spacing={0}
+                        outerRadius={'95%'}
+                    >
+                        {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
+                        <Labels />
+
+                    </PieChart>
+                </View>
+                <View style={{marginTop: 20}}>
+                    <Text style={{ fontWeight: "bold", fontSize: 18, color: "#fff"  }}>Genuine Concern Evaluation: </Text>
+                    <PieChart
+                        // outerRadius={'95%'}
+                        valueAccessor={({ item }) => item.amount}
+                        style={{ height: 200, width: 200 }}
+                        data={genuine}
+                        spacing={0}
+                        outerRadius={'95%'}
+                    >
+                        {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
+                        <Labels />
+
+                    </PieChart>
+                </View>
+                <View style={{ marginTop: 20 }}>
+                    <Text style={{ fontWeight: "bold", fontSize: 18, color: "#fff"  }}>Curiosity Evaluation: </Text>
+                    <PieChart
+                        // outerRadius={'95%'}
+                        valueAccessor={({ item }) => item.amount}
+                        style={{ height: 200, width: 200 }}
+                        data={curiosity}
+                        spacing={0}
+                        outerRadius={'95%'}
+                    >
+                        {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
+                        <Labels />
+
+                    </PieChart>
+                </View>
+                <View style={{ marginTop: 20 }}>
+                    <Text style={{ fontWeight: "bold", fontSize: 18, color: "#fff"  }}>Creativity Evaluation: </Text>
+                    <PieChart
+                        // outerRadius={'95%'}
+                        valueAccessor={({ item }) => item.amount}
+                        style={{ height: 200, width: 200 }}
+                        data={creativity}
+                        spacing={0}
+                        outerRadius={'95%'}
+                    >
+                        {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
+                        <Labels />
+
+                    </PieChart>
+                </View>
+                <View style={{ marginTop: 20 }}>
+                    <Text style={{ fontWeight: "bold", fontSize: 18, color: "#fff"  }}>Mindfullness Evaluation: </Text>
+                    <PieChart
+                        // outerRadius={'95%'}
+                        valueAccessor={({ item }) => item.amount}
+                        style={{ height: 200, width: 200 }}
+                        data={mindfullness}
+                        spacing={0}
+                        outerRadius={'95%'}
+                    >
+                        {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
+                        <Labels />
+
+                    </PieChart>
+                </View>
+                <View style={{ marginTop: 20 }}>
+                    <Text style={{ fontWeight: "bold", fontSize: 18, color: "#fff"  }}>Grit Evaluation: </Text>
+                    <PieChart
+                        // outerRadius={'95%'}
+                        valueAccessor={({ item }) => item.amount}
+                        style={{ height: 200, width: 200 }}
+                        data={grit}
+                        spacing={0}
+                        outerRadius={'95%'}
+                    >
+                        {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
+                        <Labels />
+
+                    </PieChart>
+                </View>
+                <View style={{ marginTop: 20 }}>
+                    <Text style={{ fontWeight: "bold", fontSize: 18, color: "#fff"  }}>Ownership Evaluation: </Text>
+                    <PieChart
+                        // outerRadius={'95%'}
+                        valueAccessor={({ item }) => item.amount}
+                        style={{ height: 200, width: 200 }}
+                        data={ownership}
+                        spacing={0}
+                        outerRadius={'95%'}
+                    >
+                        {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
+                        <Labels />
+
+                    </PieChart>
+                </View>
+                <View style={{ marginTop: 20 }}>
+                    <Text style={{ fontWeight: "bold", fontSize: 18, color: "#fff"  }}>Personal Branding Evaluation: </Text>
+                    <PieChart
+                        // outerRadius={'95%'}
+                        valueAccessor={({ item }) => item.amount}
+                        style={{ height: 200, width: 200 }}
+                        data={personal}
+                        spacing={0}
+                        outerRadius={'95%'}
+                    >
+                        {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
+                        <Labels />
+
+                    </PieChart>
+                </View>
+
+            </View>
         )
     }
 
@@ -250,102 +483,128 @@ export const TaskDetails = (props) => {
                 transparent={true}
                 visible={props.Visible}
                 onRequestClose={props.onRequestClose}>
-                <View style={[Style.Shadow, { marginTop: 22, backgroundColor: "transparent", flex: 1, alignItems: "center", justifyContent: "center" }]}>
+                <View style={[Style.Shadow, { marginTop: 22, backgroundColor: "transparent", flex: 1, alignItems: "center", justifyContent: "center",  }]}>
 
 
 
-                    <View style={[Style.Shadow, { backgroundColor: "#423e3e", padding: 0, width: "80%", borderRadius: 10, alignItems: "center", height:"80%", justifyContent: "center" }]}>
-                        <TouchableOpacity
-                            onPress={props.closeModal}
-                            style={{ position: "absolute", top: 20, right: 20 }}>
-                            <FontAwesomeIcon icon={faTimes} color={"orange"} />
-                        </TouchableOpacity>
-                        <View style={{ alignItems: "center" }}>
-                            <Text style={{ color: "orange", fontSize: 24 }}>{props.taskName}</Text>
-                            <Text style={{ color: "#fff" }}>{props.taskDetails}</Text>
-                        </View>
+                    {/* <View > */}
+                      
+                            <View style={[Style.Shadow, { backgroundColor: "#423e3e", padding: 0, width: "90%", height:"60%",
+                                            borderRadius: 10, alignItems: "center", justifyContent: "center",  alignSelf:"center", paddingBottom: 20 }]}>
+                        <ScrollView style={{ width: "100%" }} contentContainerStyle={{ flexGrow: 1 }}>
+                                <TouchableOpacity
+                                    onPress={props.closeModal}
 
-                        <View style={{ alignSelf: "flex-start", padding: 30 }}>
-                            <View style={{ flexDirection: "row" }}>
-                                <Text style={{ color: "orange" }}>Status: </Text>
-                                <Text style={{ color: "#fff" }}>{props.status}</Text>
+                                    style={{ position: "absolute", top: 20, right: 20, zIndex: 999, }}
+                                    >
+                                    <FontAwesomeIcon icon={faTimes} color={"orange"} />
+                                </TouchableOpacity>
+                                <View style={{ alignItems: "center" }}>
+                                    <Text style={{ color: "orange", fontSize: 24 }}>{props.taskName}</Text>
+                                    <Text style={{ color: "#fff" }}>{props.taskDetails}</Text>
+                                </View>
+
+                                <View style={{ alignSelf: "flex-start", padding: 30 }}>
+                                    <View style={{ flexDirection: "row" }}>
+                                        <Text style={{ color: "orange" }}>Status: </Text>
+                                        <Text style={{ color: "#fff" }}>{props.status}</Text>
+                                    </View>
+                                    <View style={{ flexDirection: "row", marginTop: 10 }}>
+                                        <Text style={{ color: "orange" }}>From: </Text>
+                                        <Text style={{ color: "#fff" }}>{props.startDate}</Text>
+                                    </View>
+                                    <View style={{ flexDirection: "row", marginTop: 10 }}>
+                                        <Text style={{ color: "orange" }}>To: </Text>
+                                        <Text style={{ color: "#fff" }}>{props.endDate}</Text>
+                                    </View>
+                                    <View style={{ flexDirection: "row", marginTop: 10 }}>
+                                        <Text style={{ color: "orange" }}>Completion: </Text>
+                                        <Text style={{ color: "#fff" }}>{props.completion}</Text>
+                                    </View>
+
+                                    <Text style={{ color: "orange", marginTop: 20 }}>Assigned to: {props.assignee}</Text>
+                                    <View style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}>
+                                        <FlatList
+                                            renderItem={props.renderItem}
+                                            extraData={props.extraData}
+                                            data={props.data}
+                                        />
+                                    </View>
+                                </View>
+
+                            {/* props.status !== "done"? <TouchableOpacity
+                                    // onPress={props.Selected.bind(null, 2)}
+                                    onPress={props.complete}
+                                    style={{ alignSelf:"center",marginTop: 10, width: "70%", borderRadius: 30, backgroundColor: "green", alignItems: "center", height: "10%", justifyContent: "center", padding: 5 }}>
+                                    <Text style={{ fontSize: 14, fontWeight: "bold", color: "#fff" }}>MARK AS COMPLETE</Text>
+                                </TouchableOpacity> : null */}
+                                {props.route === "admin" ?
+                                    props.employeeStatus === "done" && props.status !== "done" ? <TouchableOpacity
+                                        // onPress={props.Selected.bind(null, 2)}
+                                        onPress={props.complete}
+                                        style={{ alignSelf: "center", marginTop: 10, width: "70%", borderRadius: 30, backgroundColor: "green", alignItems: "center", height: "10%", justifyContent: "center", padding: 5 }}>
+                                        <Text style={{ fontSize: 14, fontWeight: "bold", color: "#fff" }}>MARK AS COMPLETE</Text>
+                                    </TouchableOpacity> : null
+                                : props.employeeStatus !== "done" ? <TouchableOpacity
+                                    // onPress={props.Selected.bind(null, 2)}
+                                    onPress={props.complete}
+                                    style={{ alignSelf: "center", marginTop: 10, width: "70%", borderRadius: 30, backgroundColor: "green", alignItems: "center", height: "10%", justifyContent: "center", padding: 5 }}>
+                                    <Text style={{ fontSize: 14, fontWeight: "bold", color: "#fff" }}>MARK AS COMPLETE</Text>
+                                </TouchableOpacity> : null}
+                                <View style={{ width: "100%", alignItems: "center" }}>
+                                
+                                    {props.status === "done" ?
+                                        <View>
+                                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                                <View style={{ height: 15, width: 15, backgroundColor: "orange" }} />
+
+                                                <Text style={{ color: "#fff", marginLeft: 10 }}>Communication</Text>
+                                            </View>
+                                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                                <View style={{ height: 15, width: 15, backgroundColor: "green" }} />
+
+                                                <Text style={{ color: "#fff", marginLeft: 10 }}>Creativity and Skill Set</Text>
+                                            </View>
+                                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                                <View style={{ height: 15, width: 15, backgroundColor: "blue" }} />
+
+                                                <Text style={{ color: "#fff", marginLeft: 10 }}>Curiosity</Text>
+                                            </View>
+                                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                                <View style={{ height: 15, width: 15, backgroundColor: "yellow" }} />
+
+                                                <Text style={{ color: "#fff", marginLeft: 10 }}>Genuine Concern</Text>
+                                            </View>
+                                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                                <View style={{ height: 15, width: 15, backgroundColor: "red" }} />
+
+                                                <Text style={{ color: "#fff", marginLeft: 10 }}>Grit</Text>
+                                            </View>
+                                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                                <View style={{ height: 15, width: 15, backgroundColor: "pink" }} />
+
+                                                <Text style={{ color: "#fff", marginLeft: 10 }}>Mindfullness</Text>
+                                            </View>
+                                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                                <View style={{ height: 15, width: 15, backgroundColor: "brown" }} />
+
+                                                <Text style={{ color: "#fff", marginLeft: 10 }}>Ownership</Text>
+                                            </View>
+                                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                                <View style={{ height: 15, width: 15, backgroundColor: "violet" }} />
+
+                                                <Text style={{ color: "#fff", marginLeft: 10 }}>Personal Branding</Text>
+                                            </View>
+                                        </View>
+                                        : null}
+                                        {/* {alert(props.status)} */}
+                                    {}
+                                  {props.status === "done" && task !== null? <Pie /> : null}
+                                </View>
+                        </ScrollView>
                             </View>
-                            <View style={{ flexDirection: "row", marginTop: 10 }}>
-                                <Text style={{ color: "orange" }}>From: </Text>
-                                <Text style={{ color: "#fff" }}>{props.startDate}</Text>
-                            </View>
-                            <View style={{ flexDirection: "row", marginTop: 10 }}>
-                                <Text style={{ color: "orange" }}>To: </Text>
-                                <Text style={{ color: "#fff" }}>{props.endDate}</Text>
-                            </View>
-                            <View style={{ flexDirection: "row", marginTop: 10 }}>
-                                <Text style={{ color: "orange" }}>Completion: </Text>
-                                <Text style={{ color: "#fff" }}>{props.completion}</Text>
-                            </View>
-
-                    <Text style={{ color: "orange", marginTop: 20 }}>Assigned to: {props.assignee}</Text>
-                            <View style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}>
-                                <FlatList
-                                    renderItem={props.renderItem}
-                                    extraData={props.extraData}
-                                    data={props.data}
-                                />
-                            </View>
-                        </View>
-
-                        {props.status !== "done" ? <TouchableOpacity
-                            // onPress={props.Selected.bind(null, 2)}
-                            onPress={props.complete}
-                            style={{ marginTop: 10, width: "70%", borderRadius: 30, backgroundColor: "green", alignItems: "center", height: "10%", justifyContent: "center", padding: 5 }}>
-                            <Text style={{ fontSize: 14, fontWeight: "bold", color: "#fff" }}>MARK AS COMPLETE</Text>
-                        </TouchableOpacity> : null}
-
-                        {props.status === "done" || task!== null ? <Pie/> : null}
-                        {props.status === "done" ?
-                        <View>
-                            <View style={{flexDirection:"row", alignItems:"center"}}>
-                                    <View style={{ height: 15, width: 15, backgroundColor: "orange" }} />
-
-                                    <Text style={{color:"#fff", marginLeft: 10}}>Communication</Text>
-                            </View>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <View style={{ height: 15, width: 15, backgroundColor: "green" }} />
-
-                                    <Text style={{ color: "#fff", marginLeft: 10 }}>Creativity and Skill Set</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <View style={{ height: 15, width: 15, backgroundColor: "blue" }} />
-
-                                    <Text style={{ color: "#fff", marginLeft: 10 }}>Curiosity</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <View style={{ height: 15, width: 15, backgroundColor: "yellow" }} />
-
-                                    <Text style={{ color: "#fff", marginLeft: 10 }}>Genuine Concern</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <View style={{ height: 15, width: 15, backgroundColor: "red" }} />
-
-                                    <Text style={{ color: "#fff", marginLeft: 10 }}>Grit</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <View style={{ height: 15, width: 15, backgroundColor: "pink" }} />
-
-                                    <Text style={{ color: "#fff", marginLeft: 10 }}>Mindfullness</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <View style={{ height: 15, width: 15, backgroundColor: "brown" }} />
-
-                                    <Text style={{ color: "#fff", marginLeft: 10 }}>Ownership</Text>
-                                </View>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <View style={{ height: 15, width: 15, backgroundColor: "violet" }} />
-
-                                    <Text style={{ color: "#fff", marginLeft: 10 }}>Personal Branding</Text>
-                                </View>
-                        </View>
-                        : null}
-                    </View>
+             
+                    {/* </View> */}
                     {/* </View> */}
                 </View>
             </Modal>
@@ -368,7 +627,7 @@ export const EmployeeDetails = (props) => {
         else if (val === "incomplete") {
             return "red"
         }
-        else if(val === "incoming"){
+        else if (val === "incoming") {
             return "#fff"
         }
     }
@@ -377,14 +636,14 @@ export const EmployeeDetails = (props) => {
     let finalData = []
     let total = 0
     if (pieData.length !== 0) {
-        
-      pieData.reduce((a, b) =>{
-          total = parseInt(a.total)+parseInt(b.total)
+
+        pieData.reduce((a, b) => {
+            total = parseInt(a.total) + parseInt(b.total)
         })
-        
+
 
         pieData.map((items, index) => {
-            
+
             finalData.push(
                 {
                     amount: items.total,
@@ -404,7 +663,7 @@ export const EmployeeDetails = (props) => {
         return slices.map((slice, index) => {
             const { labelCentroid, pieCentroid, data } = slice;
             return (
-             <View>
+                <View>
                     {/* <TextSvg
                         key={index}
                         x={pieCentroid[0]}
@@ -447,7 +706,7 @@ export const EmployeeDetails = (props) => {
                         {Math.round(data.percent)}%
 
                     </TextSvg>
-             </View>
+                </View>
             )
         })
     }
@@ -494,7 +753,7 @@ export const EmployeeDetails = (props) => {
                                 </View>
 
                                 <Text style={{ color: "orange", marginTop: 20 }}>Task Summary:</Text>
-                                <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 20, width:"100%" }}>
+                                <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 20, width: "100%" }}>
                                     <PieChart
                                         // outerRadius={'95%'}
                                         valueAccessor={({ item }) => item.amount}
@@ -506,22 +765,22 @@ export const EmployeeDetails = (props) => {
                                         <Labels />
                                     </PieChart>
                                 </View>
-                                <View style={{marginTop: 10}}>
+                                <View style={{ marginTop: 10 }}>
                                     <Text style={{ color: "orange", fontSize: 14, fontWeight: "bold" }}>Project Lists:</Text>
-                                    {project.map((items, index)=> {
-                                        
+                                    {project.map((items, index) => {
+
                                         let task = items.task_list
-                                        return(
-                                            <View style={{marginTop: 20, width:"100%"}}>
-                                                <View style={{flexDirection:"row", alignItems:"center"}}>
-                                                   
+                                        return (
+                                            <View style={{ marginTop: 20, width: "100%" }}>
+                                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+
                                                     <Text style={{ color: "orange", fontSize: 18, fontWeight: "bold" }}>{items.project_name}</Text>
                                                 </View>
-                                                
+
                                                 {task.map((task, key) => {
-                                                    return(
-                                                        <View style={{marginTop: 20, marginLeft: 30}}>
-                                                            <View style={{flexDirection:"row"}}>
+                                                    return (
+                                                        <View style={{ marginTop: 20, marginLeft: 30 }}>
+                                                            <View style={{ flexDirection: "row" }}>
                                                                 <View style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: assignColor(task.status) }} />
                                                                 <Text style={{ color: "orange", fontSize: 14, fontWeight: "bold" }}>{task.task_name}</Text>
                                                             </View>

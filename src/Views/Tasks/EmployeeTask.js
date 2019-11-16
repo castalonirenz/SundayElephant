@@ -98,12 +98,12 @@ const EmployeeTask = (props) => {
 
     const updateTaskStatus = () => {
         
-        axios.post('http://sunday.fitnessforlifetoday.com/api/updateTaskStatus', {
+        axios.post('http://sunday.fitnessforlifetoday.com/api/markAsCompleteEmployee', {
             task_id: taskDetails.id,
             status: "done"
         })
             .then((response) => {
-                
+                console.log(response, "--> response")
 
                 // props.getProjectDetails(projectDetails.id)
                 setShowTasks(false)
@@ -125,10 +125,12 @@ const EmployeeTask = (props) => {
             <TaskModal
                 Visible={showTasks}
                 // Visible={task}
+                route={"employee"}
                 id={taskDetails.id}
                 taskName={taskDetails.task_name}
                 taskDetails={taskDetails.task_description}
                 status={taskDetails.status}
+                employeeStatus={taskDetails.employee_status}
                 startDate={taskDetails.start_date}
                 endDate={taskDetails.end_date}
                 completion={taskDetails.status === "done" ? taskDetails.updated_at : '-----'}
@@ -138,7 +140,6 @@ const EmployeeTask = (props) => {
                 ononRequestClose={() => setShowTasks(false)}
                 complete={() => updateTaskStatus()}
             />
-
             <Task tasksData={taskList} />
         </SafeAreaView>
     )

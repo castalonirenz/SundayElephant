@@ -16,11 +16,12 @@ const ProjectDetails = (props) => {
     // const [totalHours, setTotalHours] = useState(props.Project.totalHours)
     const [taskDetails, setTaskDetails] = useState({})
     const [showTasks, setShowTasks] = useState(false)
+
     useEffect(() => {
         
-
+        
         getDetails()
-    }, [])
+    }, [taskDetails])
 
     const getDetails = () => {
         const projectDetails = props.navigation.getParam('project', null)
@@ -49,21 +50,23 @@ const ProjectDetails = (props) => {
         )
     }
 
-    const openTask = (item) => {
+    const openTask = async(item) => {
         
-        setShowTasks(true)
-        axios.post('http://sunday.fitnessforlifetoday.com/api/viewTask', {
+        
+        await axios.post('http://sunday.fitnessforlifetoday.com/api/viewTask', {
             task_id: item.id
         })
             .then((response) => {
                 
                 setTaskDetails(response.data.data)
-
+                setShowTasks(true)
             })
             .catch((err => {
                 
-                alert('Error getting project details')
+                setShowTasks(false)
+                alert('Error getting viewing task details')
             }))
+           
     }
 
     const Task = (props) => {
@@ -131,7 +134,7 @@ const ProjectDetails = (props) => {
                 
             })
             .catch((err => {
-                
+               
                 alert('Error updating task details')
             }))
     }
@@ -147,16 +150,22 @@ const ProjectDetails = (props) => {
             <TaskModal
                 Visible={showTasks}
                 // Visible={task}
+                route={"admin"}
                 id={taskDetails.id}
                 taskName={taskDetails.task_name}
                 taskDetails={taskDetails.task_description}
+                employeeStatus={taskDetails.employee_status}
                 status={taskDetails.status}
                 startDate={taskDetails.start_date}
                 endDate={taskDetails.end_date}
                 employeeName={taskDetails.full_name}
-                completion={taskDetails.status === "done" ? taskDetails.updated_at : '-----'}
+                completion={taskDetails.status === "done" && taskDetails.employee_status === "done" ? taskDetails.updated_at : '-----'}
                 assignee={taskDetails.username}
-                closeModal={()=>setShowTasks(false)}
+                closeModal={()=>{
+                setShowTasks(false)
+                // setTaskDetails(null)
+                    
+                }}
                 ononRequestClose={()=>setShowTasks(false)}
                 complete={()=> updateTaskStatus()}
             />
