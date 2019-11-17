@@ -532,14 +532,17 @@ export const TaskDetails = (props) => {
                                     </View>
                                 </View>
 
-                            {/* props.status !== "done"? <TouchableOpacity
-                                    // onPress={props.Selected.bind(null, 2)}
-                                    onPress={props.complete}
-                                    style={{ alignSelf:"center",marginTop: 10, width: "70%", borderRadius: 30, backgroundColor: "green", alignItems: "center", height: "10%", justifyContent: "center", padding: 5 }}>
-                                    <Text style={{ fontSize: 14, fontWeight: "bold", color: "#fff" }}>MARK AS COMPLETE</Text>
-                                </TouchableOpacity> : null */}
                                 {props.route === "admin" ?
-                                    props.employeeStatus === "done" && props.status !== "done" ? <TouchableOpacity
+                                
+                                    props.evaluated === false && props.employeeStatus === "done" && props.status === "done" ? <TouchableOpacity
+                                        // onPress={props.Selected.bind(null, 2)}
+                                        onPress={props.evaluate}
+                                        style={{ alignSelf: "center", marginTop: 10, width: "70%", borderRadius: 30, backgroundColor: "orange", alignItems: "center", height: "10%", justifyContent: "center", padding: 5 }}>
+                                        <Text style={{ fontSize: 14, fontWeight: "bold", color: "#fff", }}>Evaluate Me</Text>
+                                    </TouchableOpacity> : null : null
+                                }
+                                {props.route === "admin" ?
+                                    props.employeeStatus === "done" && props.status !== "done"  ? <TouchableOpacity
                                         // onPress={props.Selected.bind(null, 2)}
                                         onPress={props.complete}
                                         style={{ alignSelf: "center", marginTop: 10, width: "70%", borderRadius: 30, backgroundColor: "green", alignItems: "center", height: "10%", justifyContent: "center", padding: 5 }}>
@@ -553,7 +556,7 @@ export const TaskDetails = (props) => {
                                 </TouchableOpacity> : null}
                                 <View style={{ width: "100%", alignItems: "center" }}>
                                 
-                                    {props.status === "done" ?
+                                    {props.status === "done" && props.evaluated === true?
                                         <View>
                                             <View style={{ flexDirection: "row", alignItems: "center" }}>
                                                 <View style={{ height: 15, width: 15, backgroundColor: "orange" }} />
@@ -595,11 +598,12 @@ export const TaskDetails = (props) => {
 
                                                 <Text style={{ color: "#fff", marginLeft: 10 }}>Personal Branding</Text>
                                             </View>
+                                       
                                         </View>
+                                        
                                         : null}
-                                        {/* {alert(props.status)} */}
-                                    {}
-                                  {props.status === "done" && task !== null? <Pie /> : null}
+                                        {console.log(props.evaluated)}
+                                  {props.status === "done" && task !== null && props.evaluated === true? <Pie /> : null}
                                 </View>
                         </ScrollView>
                             </View>

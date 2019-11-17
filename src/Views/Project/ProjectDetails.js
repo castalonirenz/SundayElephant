@@ -57,7 +57,7 @@ const ProjectDetails = (props) => {
             task_id: item.id
         })
             .then((response) => {
-                
+                console.log(response.data.data, "--> viewing task")
                 setTaskDetails(response.data.data)
                 setShowTasks(true)
             })
@@ -115,6 +115,14 @@ const ProjectDetails = (props) => {
             }))
     }
 
+    const evaluate = () => {
+        props.navigation.navigate('EvaluateEmployee', {
+            taskDetails: taskDetails,
+            route: 'project'
+        })
+        setShowTasks(false)
+    }
+
     const updateTaskStatus = () => {
         
         axios.post('http://sunday.fitnessforlifetoday.com/api/updateTaskStatus', {
@@ -152,6 +160,7 @@ const ProjectDetails = (props) => {
                 // Visible={task}
                 route={"admin"}
                 id={taskDetails.id}
+                evaluated={taskDetails.task_evaluation_id !== null ? true : false}
                 taskName={taskDetails.task_name}
                 taskDetails={taskDetails.task_description}
                 employeeStatus={taskDetails.employee_status}
@@ -168,6 +177,7 @@ const ProjectDetails = (props) => {
                 }}
                 ononRequestClose={()=>setShowTasks(false)}
                 complete={()=> updateTaskStatus()}
+                evaluate={()=> evaluate()}
             />
 
         <ScrollView contentContainerStyle={{flexGrow: 1}} style={{width:"100%"}}>
