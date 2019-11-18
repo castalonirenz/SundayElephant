@@ -116,9 +116,6 @@ export const TaskDetails = (props) => {
                     strokeWidth={0.2}
                 >
                     {Math.round(data.percent)}%
-                        {}
-                    {}
-                    {/* <Text>{data.percent}</Text> */}
                 </TextSvg>
 
             )
@@ -246,7 +243,7 @@ export const TaskDetails = (props) => {
             {
                 amount: task.communication,
                 key: 0,
-                percent: task.communication / total * 100,
+                percent: task.communication / 40 * 100,
                 svg: {
                     fill: "orange"
                 }
@@ -257,7 +254,7 @@ export const TaskDetails = (props) => {
             {
                 amount: task.creativity_and_skill_set,
                 key: 1,
-                percent: task.creativity_and_skill_set / total * 100,
+                percent: task.creativity_and_skill_set / 40 * 100,
                 svg: {
                     fill: "green"
                 }
@@ -268,7 +265,7 @@ export const TaskDetails = (props) => {
             {
                 amount: task.curiosity,
                 key: 2,
-                percent: task.curiosity / total * 100,
+                percent: task.curiosity / 40 * 100,
                 svg: {
                     fill: "blue"
                 }
@@ -279,7 +276,7 @@ export const TaskDetails = (props) => {
             {
                 amount: task.genuine_concern,
                 key: 3,
-                percent: task.genuine_concern / total * 100,
+                percent: task.genuine_concern / 40 * 100,
                 svg: {
                     fill: "yellow"
                 }
@@ -290,7 +287,7 @@ export const TaskDetails = (props) => {
             {
                 amount: task.grit,
                 key: 4,
-                percent: task.grit / total * 100,
+                percent: task.grit / 40 * 100,
                 svg: {
                     fill: "red"
                 }
@@ -301,7 +298,7 @@ export const TaskDetails = (props) => {
             {
                 amount: task.mindfullness,
                 key: 4,
-                percent: task.mindfullness / total * 100,
+                percent: task.mindfullness / 40 * 100,
                 svg: {
                     fill: "pink"
                 }
@@ -312,7 +309,7 @@ export const TaskDetails = (props) => {
             {
                 amount: task.ownership,
                 key: 4,
-                percent: task.ownership / total * 100,
+                percent: task.ownership / 40 * 100,
                 svg: {
                     fill: "brown"
                 }
@@ -323,7 +320,7 @@ export const TaskDetails = (props) => {
             {
                 amount: task.personal_branding,
                 key: 4,
-                percent: task.personal_branding / total * 100,
+                percent: task.personal_branding / 40 * 100,
                 svg: {
                     fill: "violet"
                 }

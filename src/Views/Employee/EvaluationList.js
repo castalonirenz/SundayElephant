@@ -51,6 +51,7 @@ const EvaluationList = (props) => {
     const Labels = ({ slices, height, width }) => {
         return slices.map((slice, index) => {
             const { labelCentroid, pieCentroid, data } = slice;
+            let showPercent = Math.round(data.percent)
             return (
                 <View>
                
@@ -65,8 +66,8 @@ const EvaluationList = (props) => {
                         stroke={'black'}
                         strokeWidth={0.2}
                     >
-                        {Math.round(data.percent)}%
-
+                        {data.percent !== 0 ?[ showPercent+ "%"] : ""} 
+                        
                     </TextSvg>
                 </View>
             )
@@ -88,7 +89,7 @@ const EvaluationList = (props) => {
                 {
                     amount: overAll.outstanding,
                     key: 0,
-                    percent: overAll.outstanding / total * 100,
+                    percent: overAll.outstanding / 40 * 100,
                     svg: {
                         fill: "orange"
                     }
@@ -99,7 +100,7 @@ const EvaluationList = (props) => {
                 {
                     amount: overAll.exceeds_expectations,
                     key: 1,
-                    percent: overAll.exceeds_expectations / total * 100,
+                    percent: overAll.exceeds_expectations / 40 * 100,
                     svg: {
                         fill: "green"
                     }
@@ -110,7 +111,7 @@ const EvaluationList = (props) => {
                 {
                     amount: overAll.meets_expectations,
                     key: 2,
-                    percent: overAll.meets_expectations / total * 100,
+                    percent: overAll.meets_expectations / 40 * 100,
                     svg: {
                         fill: "blue"
                     }
@@ -121,7 +122,7 @@ const EvaluationList = (props) => {
                 {
                     amount: overAll.below_expectations,
                     key: 3,
-                    percent: overAll.below_expectations / total * 100,
+                    percent: overAll.below_expectations / 40 * 100,
                     svg: {
                         fill: "yellow"
                     }
@@ -132,7 +133,7 @@ const EvaluationList = (props) => {
                 {
                     amount: overAll.unsatisfactory,
                     key: 4,
-                    percent: overAll.unsatisfactory / total * 100,
+                    percent: overAll.unsatisfactory / 40 * 100,
                     svg: {
                         fill: "red"
                     }
@@ -150,7 +151,7 @@ const EvaluationList = (props) => {
                 spacing={0}
                 outerRadius={'95%'}
             >
-                {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 80 }}>50%</Text> */}
+                {/* <Text style={{ fontSize: 18, color: "orange", fontWeight: "bold", alignSelf:"center", top: 40 }}>50%</Text> */}
                 <Labels />
                
             </PieChart>
